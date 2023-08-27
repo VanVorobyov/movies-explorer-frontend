@@ -20,14 +20,18 @@
 }
 
 .search__input {
-  min-height: 72px;
+  height: 72px;
   width: 100%;
+
+  box-sizing: border-box;
 
   padding: 0 0 0 25px;
 
+  outline: none;
   border-radius: 8px;
   border: 1.5px solid rgba(170, 170, 170, 0.2);
   background-color: transparent;
+  transition: border 0.4s ease;
 
   color: #fff;
   font-family: Inter;
@@ -35,6 +39,10 @@
   font-style: normal;
   font-weight: 400;
   line-height: 20px; /* 111.111% */
+}
+
+.search__input:focus {
+  border: 1.5px solid rgb(66, 133, 244);
 }
 
 .search__input::placeholder {

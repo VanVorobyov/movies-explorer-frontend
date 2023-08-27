@@ -9,7 +9,7 @@ const SearchForm = () => {
         <form className="search-form">
           <input
             id="search-input"
-            type="search"
+            type="text"
             className="search__input"
             placeholder="Фильм"
             autoComplete="off"
