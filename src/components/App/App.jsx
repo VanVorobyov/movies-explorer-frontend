@@ -8,14 +8,21 @@ import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import NotFoundPage from '../NotFoundPage/NotFounfPage';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import ScrollToTop from '../../utils/ScrollToTop/ScrollToTop';
 
 import api from '../../utils/MoviesApi';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false);
   const [movies, setMovies] = useState([]);
+
+  const handleBurgerMenuOpen = () => setBurgerMenuOpen(true);
+
+  const closeAll = () => {
+    setBurgerMenuOpen(false);
+  };
 
   useEffect(() => {
     api
@@ -32,7 +39,12 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          element={<Main isLoggedIn={!isLoggedIn} />}
+          element={
+            <Main
+              isLoggedIn={!isLoggedIn}
+              onBurgerButtonClick={handleBurgerMenuOpen}
+            />
+          }
         />
         <Route
           path="/movies"
@@ -40,6 +52,7 @@ const App = () => {
             <Movies
               isLoggedIn={isLoggedIn}
               movies={movies}
+              onBurgerButtonClick={handleBurgerMenuOpen}
             />
           }
         />
@@ -49,6 +62,7 @@ const App = () => {
             <SavedMovies
               isLoggedIn={isLoggedIn}
               movies={movies}
+              onBurgerButtonClick={handleBurgerMenuOpen}
             />
           }
         />
@@ -69,6 +83,11 @@ const App = () => {
           element={<NotFoundPage />}
         />
       </Routes>
+
+      <BurgerMenu
+        isOpen={isBurgerMenuOpen}
+        onClose={closeAll}
+      />
     </div>
   );
 };

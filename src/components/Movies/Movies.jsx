@@ -6,11 +6,10 @@ import Footer from '../Footer/Footer';
 // import Preloader from '../Preloader/Preloader';
 
 const Movies = (props) => {
-  const { movies } = props;
-
+  const { movies, onBurgerButtonClick } = props;
   return (
     <>
-      <Header />
+      <Header onClick={onBurgerButtonClick} />
       <SearchForm />
       <MoviesCardList movies={movies} />
       <Footer />

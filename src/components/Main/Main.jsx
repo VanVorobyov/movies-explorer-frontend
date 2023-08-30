@@ -7,10 +7,14 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-const Main = ({ isLoggedIn }) => {
+const Main = (props) => {
+  const { isLoggedIn, onBurgerButtonClick } = props;
   return (
     <div>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header
+        isLoggedIn={isLoggedIn}
+        onClick={onBurgerButtonClick}
+      />
       <Promo />
       <AboutProject />
       <Techs />
