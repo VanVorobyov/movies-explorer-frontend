@@ -10,14 +10,12 @@ const NavigationMovies = () => {
         <NavLink
           to="/movies"
           className={({ isActive }) => (isActive ? 'nav__movies-link-active' : 'nav__movies-link')}
-          activeClassName="active"
         >
           Фильмы
         </NavLink>
         <NavLink
           to="/saved-movies"
           className={({ isActive }) => (isActive ? 'nav__movies-link-active' : 'nav__movies-link')}
-          activeClassName="active"
         >
           Сохранённые фильмы
         </NavLink>

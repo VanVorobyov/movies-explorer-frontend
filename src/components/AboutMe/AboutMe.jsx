@@ -1,6 +1,6 @@
+import React from 'react';
 import './AboutMe.css';
 import StudentPhoto from '../../images/ava.jpeg';
-import React from 'react';
 
 const AboutMe = () => {
   return (

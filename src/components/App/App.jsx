@@ -7,6 +7,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
+import NotFoundPage from '../NotFoundPage/NotFounfPage';
 import ScrollToTop from '../../utils/ScrollToTop/ScrollToTop';
 
 import api from '../../utils/MoviesApi';
@@ -33,7 +34,6 @@ const App = () => {
           path="/"
           element={<Main isLoggedIn={!isLoggedIn} />}
         />
-
         <Route
           path="/movies"
           element={
@@ -43,7 +43,6 @@ const App = () => {
             />
           }
         />
-
         <Route
           path="/saved-movies"
           element={
@@ -53,20 +52,21 @@ const App = () => {
             />
           }
         />
-
         <Route
           path="/profile"
           element={<Profile isLoggedIn={isLoggedIn} />}
         />
-
         <Route
           path="/signin"
           element={<Login />}
         />
-
         <Route
           path="/signup"
           element={<Register />}
+        />
+        <Route
+          path="*"
+          element={<NotFoundPage />}
         />
       </Routes>
     </div>
