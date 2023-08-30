@@ -1,6 +1,7 @@
 .auth__form {
   max-width: 396px;
   width: 100%;
+  min-height: 630px;
 
   margin: 0 auto;
 
@@ -27,13 +28,15 @@
 }
 
 .auth__form-button {
-  height: 45px;
+  width: 100%;
+  margin-top: auto;
 
-  margin: 59px 0 0 0;
+  height: 45px;
 
   border: none;
   border-radius: 3px;
   background: #4285f4;
+  cursor: pointer;
 
   color: #fff;
   text-align: center;

@@ -11,26 +11,69 @@
   background-position: center;
 }
 
-.promo__title {
-  max-width: 626px;
-  width: 100%;
-
-  margin: 0 0 0 70px;
+.promo__content {
+  margin: 0 70px 0;
   padding: 50px 0 0;
 
+  display: flex;
+  justify-content: space-between;
+}
+
+.promo__text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.promo__title {
+  max-width: 640px;
+  width: 100%;
+
+  margin: 0;
+
   color: #fff;
-  font-family: 'Inter';
-  font-size: 40px;
+  font-family: Inter;
+  font-size: 50px;
   font-style: normal;
   font-weight: 400;
-  line-height: 52px; /* 130% */
-  letter-spacing: -1.6px;
+  line-height: 58px; /* 116% */
+}
+.promo__subtitle {
+  width: 310px;
+
+  margin: 36px 0 0;
+
+  opacity: 0.5;
+
+  color: #fff;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .promo__img {
-  max-width: 722px;
+  max-width: 310px;
   width: 100%;
-  min-height: 244px;
-  padding: 0 44px;
-  margin: 102px 26px 60px auto;
+  height: 304px;
+}
+
+.promo__button {
+  width: 129px;
+  margin: 146px 0 0;
+  padding: 10px 0;
+
+  display: block;
+
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+
+  text-align: center;
+  color: #fff;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: none;
 }

@@ -5,15 +5,17 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 // import Preloader from '../Preloader/Preloader';
 
-const Movies = () => {
+const Movies = (props) => {
+  const { movies } = props;
+
   return (
-    <div>
+    <>
       <Header />
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList movies={movies} />
       <Footer />
       {/* <Preloader /> */}
-    </div>
+    </>
   );
 };
 

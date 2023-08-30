@@ -1,22 +1,37 @@
-import React from 'react';
+import { useState } from 'react';
 import './MoviesCard.css';
-import image from '../../images/pic.png';
+import { useLocation } from 'react-router-dom';
 
-const MoviesCard = () => {
+import DurationConverter from '../../utils/DurationConverter';
+
+const MoviesCard = (props) => {
+  const { movie, onLikeClick } = props;
+
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLikeClick = () => {
+    setIsLiked((prev) => !prev);
+  };
+
+  const path = useLocation().pathname;
+  const isSavedMovies = path === '/saved-movies';
+
   return (
     <li className="card">
       <div className="card__title-wrap">
-        <h2 className="card__title">В погоне за Бенкси</h2>
-        <span className="card__duration">0ч 42м</span>
+        <h2 className="card__title">{movie.nameRU}</h2>
+        <span className="card__duration">{DurationConverter(movie.duration)}</span>
       </div>
       <img
-        src={image}
+        src={`https://api.nomoreparties.co/${movie.image.url}`}
         alt="Обложка фильма"
         className="card__image"
       />
+
       <button
         type="button"
-        className="card__button"
+        className={`card__button ${isLiked && 'card__button_saved'} card__button_delete`}
+        onClick={handleLikeClick}
       >
         Сохранить
       </button>

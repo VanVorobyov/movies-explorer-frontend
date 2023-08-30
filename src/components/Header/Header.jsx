@@ -1,13 +1,15 @@
 import './Header.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
-// import Navigation from '../Navigation/Navigation';
+import { Link, useLocation } from 'react-router-dom';
+import Navigation from '../Navigation/Navigation';
 import logo from '../../images/header__logo.svg';
-// import account_icon from '../../images/account__icon.svg';
 
-const Header = () => {
+const Header = ({ isLoggedIn }) => {
+  const path = useLocation().pathname;
+  const isPromo = path === '/';
+
   return (
-    <header className="header header_colored">
+    <header className={`header ${isPromo ? 'header_colored' : ''} `}>
       <div className="header__content">
         <Link
           className="header__logo"
@@ -18,21 +20,9 @@ const Header = () => {
             alt="Логотип"
           />
         </Link>
-        {/* <Navigation /> */}
-        <nav className="header__auth">
-          <Link
-            className="header__link"
-            to="/sign-up"
-          >
-            Регистрация
-          </Link>
-          <Link
-            className="header__link header__link_sign-in"
-            to="/sign-in"
-          >
-            Войти
-          </Link>
-        </nav>
+        <div className="header__navigation">
+          <Navigation isLoggedIn={isLoggedIn} />
+        </div>
       </div>
     </header>
   );
