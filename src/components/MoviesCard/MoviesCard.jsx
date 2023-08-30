@@ -27,13 +27,12 @@ const MoviesCard = (props) => {
         alt="Обложка фильма"
         className="card__image"
       />
-
       <button
         type="button"
-        className={`card__button ${isLiked && 'card__button_saved'} card__button_delete`}
+        className={`card__button ${!isSavedMovies ? ` ${isLiked ? 'card__button_saved' : ''}` : 'card__button_delete'} `}
         onClick={handleLikeClick}
       >
-        Сохранить
+        {!isLiked && !isSavedMovies && 'Сохранить'}
       </button>
     </li>
   );
