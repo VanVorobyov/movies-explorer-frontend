@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import DurationConverter from '../../utils/DurationConverter';
 
 const MoviesCard = (props) => {
-  const { movie, onLikeClick } = props;
+  const { movie } = props;
 
   const [isLiked, setIsLiked] = useState(false);
 

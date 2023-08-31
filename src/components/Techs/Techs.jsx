@@ -1,9 +1,9 @@
-import './Techs.css';
-import React from 'react';
+import "./Techs.css";
+import React from "react";
 
 const Techs = () => {
   return (
-    <div className="techs">
+    <section className="techs">
       <div className="techs__content">
         <h2 className="techs__title">Технологии</h2>
         <div className="techs__wrapper">
@@ -34,7 +34,7 @@ const Techs = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </section>
   );
 };
 
