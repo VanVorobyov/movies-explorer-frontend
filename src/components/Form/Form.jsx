@@ -22,9 +22,14 @@ const Form = (props) => {
           className="auth__form__logo"
         />
         <h1 className="auth__form__title">{title}</h1>
+
         {children}
+
         <button
-          className={`auth__form-button auth__form-button_${name} ${!isValid || isDisabled ? 'auth__form-button_disabled' : ''}`}
+          className={`auth__form-button auth__form-button_${name}
+
+          //${!isValid || isDisabled ? 'auth__form-button_disabled' : ''}
+          `}
           type="submit"
           disabled={!isValid || isDisabled}
         >

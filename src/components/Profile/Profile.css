@@ -85,7 +85,7 @@
   cursor: pointer;
 
   border-radius: 3px;
-  background-color: #3456f3;
+  background-color: rgb(66, 133, 244);
 
   color: #fff;
   text-align: center;
@@ -94,6 +94,21 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+
+  transition: background-color 0.4s ease;
+}
+
+.profile__form-button-save:hover {
+  background-color: rgba(66, 133, 244, 0.8);
+}
+
+.profile__form-button-save_disabled {
+  background-color: rgb(47, 47, 47);
+
+  color: #c2c2c2;
+}
+.profile__form-button-save_disabled:hover {
+  background-color: rgba(47, 47, 47);
 }
 
 .profile__form-button-edit {
@@ -111,9 +126,13 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
+  opacity: 1;
+  transition: opacity 0.4s ease;
 }
 
-.profile__form-button-save_disabled {
+.profile__form-button-edit:hover {
+  opacity: 0.7;
 }
 
 .profile__form-button-sign-out {
@@ -130,4 +149,11 @@
   line-height: 16px;
   text-align: center;
   color: #ff4062;
+
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.profile__form-button-sign-out:hover {
+  opacity: 0.7;
 }

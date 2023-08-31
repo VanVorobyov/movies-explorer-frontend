@@ -3,11 +3,11 @@ import './Profile.css';
 import Header from '../Header/Header';
 
 const Profile = (props) => {
-  const { name, isValid, isDisabled, isLoading, loadingText, buttonText } = props;
+  const { name, isValid, isDisabled, isLoading, loadingText, buttonText, onBurgerButtonClick } = props;
 
   return (
     <>
-      <Header />
+      <Header onClick={onBurgerButtonClick} />
       <section className="profile">
         <h3 className="profile__title">Привет, Иван {name}!</h3>
         <form
@@ -45,7 +45,9 @@ const Profile = (props) => {
           <span className="profile__input-error">При обновлении профиля произошла ошибка.</span>
 
           {/* <button
-            className={`profile__form-button-save ${!isValid || isDisabled ? 'profile__form-button-save_disabled' : ''}`}
+            className={`profile__form-button-save
+            //${!isValid || isDisabled ? 'profile__form-button-save_disabled' : ''}
+            `}
             type="submit"
             disabled={!isValid || isDisabled}
           >

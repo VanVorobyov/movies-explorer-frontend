@@ -68,7 +68,12 @@ const App = () => {
         />
         <Route
           path="/profile"
-          element={<Profile isLoggedIn={isLoggedIn} />}
+          element={
+            <Profile
+              isLoggedIn={isLoggedIn}
+              onBurgerButtonClick={handleBurgerMenuOpen}
+            />
+          }
         />
         <Route
           path="/signin"

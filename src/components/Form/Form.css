@@ -35,7 +35,7 @@
 
   border: none;
   border-radius: 3px;
-  background: #4285f4;
+  background-color: rgb(66, 133, 244);
   cursor: pointer;
 
   color: #fff;
@@ -45,6 +45,22 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+
+  transition: background-color 0.4s ease;
+}
+
+.auth__form-button:hover {
+  background-color: rgba(66, 133, 244, 0.8);
+}
+
+.auth__form-button_disabled {
+  background-color: rgb(47, 47, 47);
+
+  color: #c2c2c2;
+}
+
+.auth__form-button_disabled:hover {
+  background-color: rgba(47, 47, 47);
 }
 
 .auth__form-text-wrap {
@@ -66,6 +82,7 @@
   font-weight: 400;
   line-height: normal;
 }
+
 .auth__form-link {
   color: #4285f4;
   text-align: center;
@@ -74,4 +91,13 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
+  text-decoration: none;
+
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.auth__form-link:hover {
+  opacity: 0.7;
 }

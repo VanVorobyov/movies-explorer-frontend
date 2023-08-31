@@ -17,7 +17,14 @@
   line-height: 18px; /* 128.571% */
 
   text-decoration: none;
+
+  transition: opacity 0.4s ease;
 }
+
+.nav__movies-link:hover {
+  opacity: 0.7;
+}
+
 .nav__movies-link-active {
   color: #fff;
   text-align: right;
@@ -28,6 +35,11 @@
   line-height: 18px; /* 128.571% */
 
   text-decoration: none;
+
+  transition: opacity 0.4s ease;
+}
+.nav__movies-link-active:hover {
+  opacity: 0.7;
 }
 
 .nav__movies-account-button {
