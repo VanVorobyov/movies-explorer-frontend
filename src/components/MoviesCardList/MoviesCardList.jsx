@@ -18,7 +18,7 @@ const MoviesCardList = ({ movies }) => {
         </ul>
         <button
           type="button"
-          className="movies-card-list__button"
+          className="movies-card-list__button "
         >
           Ещё
         </button>

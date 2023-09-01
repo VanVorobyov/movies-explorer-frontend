@@ -1,7 +1,4 @@
 .card {
-  max-width: 360px;
-  width: 100%;
-
   display: flex;
   flex-direction: column;
 
@@ -102,3 +99,6 @@
 .card__button_delete:hover {
   background-color: rgba(49, 49, 49, 0.8);
 }
+
+/* @media screen and (max-width: 1279px) {
+} */
