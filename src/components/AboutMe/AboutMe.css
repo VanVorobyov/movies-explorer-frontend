@@ -11,7 +11,7 @@
   margin: 0;
 
   color: #fff;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 22px;
   font-style: normal;
   font-weight: 400;
@@ -42,7 +42,7 @@
   margin: 0;
 
   color: #fff;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 50px;
   font-style: normal;
   font-weight: 400;
@@ -54,7 +54,7 @@
   margin: 18px 0 0 0;
 
   color: #fff;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -67,7 +67,7 @@
   margin: 26px 0 auto 0;
 
   color: #fff;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -78,7 +78,7 @@
   margin-top: auto;
   width: max-content;
   color: #fff;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;

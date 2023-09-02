@@ -11,7 +11,7 @@
   margin: 0;
 
   color: #fff;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 22px;
   font-style: normal;
   font-weight: 400;
@@ -45,7 +45,7 @@
   margin: 0;
 
   color: #fff;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -57,7 +57,7 @@
   margin: 0;
 
   color: #fff;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -88,7 +88,7 @@
   padding: 9px 14px;
 
   text-align: center;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -108,7 +108,7 @@
 
   color: #8b8b8b;
   text-align: center;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;

@@ -23,9 +23,10 @@ const Profile = (props) => {
               className="profile__input"
               id="name-input"
               type="text"
+              autoComplete="off"
               minLength="2"
               maxLength="40"
-              required
+              required={true}
               // onChange={handleChange}
               // value={values.name || ''}
             />
@@ -37,6 +38,9 @@ const Profile = (props) => {
               className="profile__input"
               id="email-input"
               type="email"
+              autoComplete="off"
+              minLength="2"
+              maxLength="40"
               required
               // onChange={handleChange}
               // value={values.email || ''}

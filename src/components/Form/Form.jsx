@@ -16,11 +16,15 @@ const Form = (props) => {
         noValidate
         onSubmit={onSubmit}
       >
-        <img
-          src={logo}
-          alt="Логотип"
+        <Link
           className="auth__form__logo"
-        />
+          to="/"
+        >
+          <img
+            src={logo}
+            alt="Логотип"
+          />
+        </Link>
         <h1 className="auth__form__title">{title}</h1>
 
         {children}

@@ -1,6 +1,6 @@
 .auth__form-label {
   color: #a0a0a0;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -19,7 +19,7 @@
   transition: border 0.4s ease;
 
   color: #fff;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -36,7 +36,7 @@
   margin-top: 6px;
 
   color: #ff3055;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;

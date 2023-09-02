@@ -18,7 +18,7 @@ const FormInput = (props) => {
         className={`auth__form-input auth__form-input_${name}`}
         placeholder={``}
         name={`${name}-input`}
-        autoComplete="new-password"
+        autoComplete="off"
         required={true}
         minLength="2"
         maxLength="30"

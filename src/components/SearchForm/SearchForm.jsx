@@ -13,6 +13,8 @@ const SearchForm = () => {
             className="search__input"
             placeholder="Фильм"
             autoComplete="off"
+            required={true}
+            minLength="2"
           />
           <button
             className="search__button"
