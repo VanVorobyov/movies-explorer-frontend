@@ -3,6 +3,7 @@
   align-items: center;
   gap: 30px;
 }
+
 .nav__auth-link {
   color: #fff;
   text-align: right;
@@ -17,6 +18,7 @@
   opacity: 1;
   transition: opacity 0.4s ease;
 }
+
 .nav__auth-link:hover {
   opacity: 0.7;
 }
@@ -26,4 +28,18 @@
   background-color: #3ddc84;
   border-radius: 3px;
   padding: 8px 20px;
+}
+
+@media screen and (max-width: 425px) {
+  .nav__auth {
+    gap: 14px;
+  }
+
+  .nav__auth-link {
+    font-size: 10px;
+  }
+
+  .nav__auth-link_sign-in {
+    padding: 5px 12px;
+  }
 }

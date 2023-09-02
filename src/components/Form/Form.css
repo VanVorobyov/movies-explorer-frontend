@@ -63,7 +63,7 @@
 }
 
 .auth__form-text-wrap {
-  margin: 16px 0 0 0;
+  margin: 16px 0 70px;
 
   display: flex;
   justify-content: center;
@@ -106,6 +106,41 @@
     padding: 232px 0 0;
   }
   .auth__form-text-wrap {
-    margin: 16px 0 58px 0;
+    margin: 16px 0 70px 0;
+  }
+}
+@media screen and (max-width: 425px) {
+  .auth__form {
+    max-width: 260px;
+    padding: 56px 0 0;
+
+    height: 100vh;
+  }
+  .auth__form__logo {
+    width: 38px;
+    height: 38px;
+    align-self: center;
+  }
+
+  .auth__form__title {
+    margin: 50px 0 80px;
+    align-self: center;
+  }
+
+  .auth__form-button {
+    font-size: 12px;
+  }
+
+  .auth__form-text-wrap {
+    margin: 15px 0 85px 0;
+    gap: 7px;
+  }
+
+  .auth__form-text {
+    font-size: 12px;
+  }
+
+  .auth__form-link {
+    font-size: 12px;
   }
 }

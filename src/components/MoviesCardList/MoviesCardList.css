@@ -40,6 +40,8 @@
 }
 
 .movies-card-list__button_hidden {
+  height: 10px;
+
   visibility: hidden;
   opacity: 0;
 }
@@ -55,6 +57,19 @@
   }
 
   .movies-cards {
-    gap: 35px 24px;
+    gap: 45px 24px;
+    margin: 0 0 90px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .movies-card-list__content {
+    margin: 0 auto;
+    padding: 50px 10px 80px;
+  }
+
+  .movies-cards {
+    gap: 15px;
+    margin: 0 0 80px;
   }
 }

@@ -5,12 +5,12 @@
 
 @media screen and (max-width: 768px) {
   .burger-menu__button {
-    width: 44px;
-    height: 44px;
+    width: 43px;
+    height: 40px;
 
     box-sizing: border-box;
 
-    padding: 8px;
+    padding: 8px 9px 9px 8px;
 
     display: flex;
     flex-direction: column;
@@ -24,6 +24,18 @@
 
   .burger-menu__button-line {
     width: 28px;
+    height: 3px;
+    background-color: #fff;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .burger-menu__button {
+    padding: 10px 9px 9px 12px;
+  }
+
+  .burger-menu__button-line {
+    width: 22px;
     height: 3px;
     background-color: #fff;
   }

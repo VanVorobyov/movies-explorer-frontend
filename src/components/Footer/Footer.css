@@ -27,7 +27,7 @@
 
 .footer__links__content {
   width: 100%;
-  margin: 20px 0 0 0;
+  margin: 19px 0 0 0;
 
   display: flex;
   justify-content: space-between;
@@ -78,5 +78,38 @@
 @media screen and (max-width: 975px) {
   .footer__content {
     margin: 0 30px;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .footer__content {
+    margin: 0 10px;
+  }
+
+  .footer__title {
+    font-size: 12px;
+  }
+
+  .footer__links__content {
+    margin: 20px 0 0 0;
+    padding-top: 28px;
+
+    flex-direction: column-reverse;
+    gap: 28px;
+  }
+
+  .footer__list {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer__link {
+    font-size: 12px;
+  }
+
+  .footer__text {
+    color: #8b8b8b;
+    font-size: 12px;
   }
 }

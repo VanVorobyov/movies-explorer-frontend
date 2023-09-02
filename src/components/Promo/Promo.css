@@ -13,7 +13,7 @@
 
 .promo__content {
   margin: 0 70px 0;
-  padding: 50px 0 0;
+  padding: 75px 0;
 
   display: flex;
   justify-content: space-between;
@@ -31,6 +31,7 @@
   margin: 0;
 
   color: #fff;
+  font-feature-settings: 'clig' off, 'liga' off;
   font-family: Inter;
   font-size: 50px;
   font-style: normal;
@@ -62,9 +63,10 @@
 .promo__button {
   width: 129px;
   margin: 146px 0 0;
-  padding: 10px 0;
+  padding: 9px 0;
 
   display: block;
+  box-sizing: border-box;
 
   border-radius: 3px;
   border: 1px solid rgba(255, 255, 255, 0.6);
@@ -104,7 +106,7 @@
   }
 
   .promo__title {
-    margin: 41px 0 0;
+    margin: 48px 0 0;
 
     text-align: center;
     font-size: 40px;
@@ -112,7 +114,7 @@
   }
 
   .promo__subtitle {
-    width: 310px;
+    width: 260px;
 
     margin: 22px 0 0;
 
@@ -121,6 +123,43 @@
   }
 
   .promo__button {
-    margin: 92px 0 0;
+    margin: 91px 0 0;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .promo {
+    max-width: 425px;
+    min-height: 636px;
+  }
+
+  .promo__content {
+    margin: 0 18px 0;
+    padding: 70px 0 0;
+  }
+
+  .promo__text-wrap {
+    align-items: center;
+  }
+
+  .promo__title {
+    margin: 44px 0 0;
+    font-size: 30px;
+    line-height: 38px;
+    letter-spacing: -1.2px;
+  }
+
+  .promo__subtitle {
+    width: 260px;
+
+    margin: 24px 0 0;
+  }
+
+  .promo__img {
+    height: 206px;
+  }
+
+  .promo__button {
+    margin: 80px 0 0;
   }
 }

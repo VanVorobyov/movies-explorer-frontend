@@ -100,5 +100,29 @@
   background-color: rgba(49, 49, 49, 0.8);
 }
 
-/* @media screen and (max-width: 1279px) {
-} */
+@media screen and (max-width: 1250px) {
+  .card__button {
+    margin: 8px auto;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .card__title-wrap {
+    padding: 14px;
+  }
+  .card__title {
+    font-size: 12px;
+  }
+
+  .card__duration {
+    width: 50px;
+
+    font-size: 10px;
+  }
+  .card__image {
+    height: 168px;
+  }
+  .card__button {
+    margin: 14px auto;
+  }
+}
