@@ -10,12 +10,19 @@
   flex-direction: column;
 }
 
-.auth__form__logo {
+.auth__form-logo {
   width: 38px;
   height: 38px;
+
+  opacity: 1;
+  transition: opacity 0.4s ease;
 }
 
-.auth__form__title {
+.auth__form-logo:hover {
+  opacity: 0.7;
+}
+
+.auth__form-title {
   margin: 40px 0 40px;
 
   color: #fff;
@@ -116,13 +123,13 @@
 
     height: 100vh;
   }
-  .auth__form__logo {
+  .auth__form-logo {
     width: 38px;
     height: 38px;
     align-self: center;
   }
 
-  .auth__form__title {
+  .auth__form-title {
     margin: 50px 0 80px;
     align-self: center;
   }

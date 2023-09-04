@@ -9,8 +9,10 @@ const Movies = (props) => {
   return (
     <>
       <Header onClick={onBurgerButtonClick} />
-      <SearchForm />
-      <MoviesCardList movies={movies} />
+      <main>
+        <SearchForm />
+        <MoviesCardList movies={movies} />
+      </main>
       <Footer />
     </>
   );

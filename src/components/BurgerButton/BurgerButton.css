@@ -1,10 +1,10 @@
 /* Общие стили для бургер-меню */
-.burger-menu__button {
+.burger-menu-button {
   display: none;
 }
 
 @media screen and (max-width: 768px) {
-  .burger-menu__button {
+  .burger-menu-button {
     width: 43px;
     height: 40px;
 
@@ -20,9 +20,16 @@
 
     background-color: transparent;
     border: none;
+
+    opacity: 1;
+    transition: opacity 0.4s ease;
   }
 
-  .burger-menu__button-line {
+  .burger-menu-button:hover {
+    opacity: 0.7;
+  }
+
+  .burger-menu-button__line {
     width: 28px;
     height: 3px;
     background-color: #fff;
@@ -30,11 +37,11 @@
 }
 
 @media screen and (max-width: 425px) {
-  .burger-menu__button {
+  .burger-menu-button {
     padding: 10px 9px 9px 12px;
   }
 
-  .burger-menu__button-line {
+  .burger-menu-button__line {
     width: 22px;
     height: 3px;
     background-color: #fff;

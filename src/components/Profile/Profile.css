@@ -29,14 +29,16 @@
   justify-content: space-between;
   align-items: center;
 
+  border-bottom: 1px solid #424242;
+}
+
+.profile__form-text {
   color: #fff;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-size: 11px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-
-  border-bottom: 1px solid #424242;
 }
 
 .profile__form-label:last-of-type {
@@ -61,6 +63,10 @@
   border: none;
   outline: none;
 }
+.profile__input:focus {
+  background: linear-gradient(to left, rgb(91, 196, 91, 0.2), #202020);
+}
+
 .profile__input-error {
   margin: 172px 0 0;
 
@@ -158,6 +164,31 @@
   opacity: 0.7;
 }
 
+.profile__form-button-sign-out-link {
+  margin-top: 14px;
+  min-height: 16px;
+
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #ff4062;
+
+  opacity: 1;
+  transition: opacity 0.4s ease;
+
+  text-decoration: none;
+}
+
+.profile__form-button-sign-out-link:hover {
+  opacity: 0.7;
+}
+
 @media screen and (max-width: 768px) {
   .profile {
     margin: 234px auto 70px;
@@ -241,25 +272,6 @@
     opacity: 0.7;
   }
 
-  .profile__form-button-sign-out {
-    margin-top: 14px;
-    min-height: 16px;
-
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-
-    font-style: normal;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 16px;
-    text-align: center;
-    color: #ff4062;
-
-    opacity: 1;
-    transition: opacity 0.4s ease;
-  }
-
   .profile__form-button-sign-out:hover {
     opacity: 0.7;
   }
@@ -296,9 +308,9 @@
   .profile__form-button-edit {
     font-size: 12px;
   }
-  .profile__form-button-sign-out {
-    margin-bottom: 14px;
 
+  .profile__form-button-sign-out-link {
+    margin-bottom: 14px;
     font-size: 12px;
   }
 }

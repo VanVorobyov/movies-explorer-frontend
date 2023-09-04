@@ -24,7 +24,7 @@ const MoviesCard = (props) => {
       </div>
       <img
         src={`https://api.nomoreparties.co/${movie.image.url}`}
-        alt="Обложка фильма"
+        alt={`Обложка фильма ${movie.nameRU}`}
         className="card__image"
       />
       <button

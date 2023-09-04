@@ -34,36 +34,42 @@ const BurgerMenu = ({ isOpen, onClose }) => {
           type="button"
           onClick={onClose}
         />
-        <div className="burger-menu__nav-wrap">
-          <NavLink
-            to="/"
-            className={({ isActive }) => (isActive ? 'burger-menu__nav-link burger-menu__nav-link_active' : 'burger-menu__nav-link')}
-            onClick={onClose}
-          >
-            Главная
-          </NavLink>
-          <NavLink
-            to="/movies"
-            className={({ isActive }) => (isActive ? 'burger-menu__nav-link burger-menu__nav-link_active' : 'burger-menu__nav-link')}
-            onClick={onClose}
-          >
-            Фильмы
-          </NavLink>
-          <NavLink
-            to="/saved-movies"
-            className={({ isActive }) => (isActive ? 'burger-menu__nav-link burger-menu__nav-link_active' : 'burger-menu__nav-link')}
-            onClick={onClose}
-          >
-            Сохранённые фильмы
-          </NavLink>
-        </div>
+
+        <ul className="burger-menu__nav-wrap">
+          <li className="burger-menu__nav-wrap-item">
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? 'burger-menu__nav-link burger-menu__nav-link_active' : 'burger-menu__nav-link')}
+              onClick={onClose}
+            >
+              Главная
+            </NavLink>
+          </li>
+          <li className="burger-menu__nav-wrap-item">
+            <NavLink
+              to="/movies"
+              className={({ isActive }) => (isActive ? 'burger-menu__nav-link burger-menu__nav-link_active' : 'burger-menu__nav-link')}
+              onClick={onClose}
+            >
+              Фильмы
+            </NavLink>
+          </li>
+          <li className="burger-menu__nav-wrap-item">
+            <NavLink
+              to="/saved-movies"
+              className={({ isActive }) => (isActive ? 'burger-menu__nav-link burger-menu__nav-link_active' : 'burger-menu__nav-link')}
+              onClick={onClose}
+            >
+              Сохранённые фильмы
+            </NavLink>
+          </li>
+        </ul>
 
         <NavLink
           to="/profile"
           className="burger-menu__nav-link"
         >
-          <button
-            type="button"
+          <div
             className="burger-menu__nav-account-button"
             onClick={onClose}
           >
@@ -73,7 +79,7 @@ const BurgerMenu = ({ isOpen, onClose }) => {
               alt="Иконка аккаунта"
               className="burger-menu__nav-account-icon"
             />
-          </button>
+          </div>
         </NavLink>
       </nav>
     </div>

@@ -5,12 +5,12 @@ const BurgerButton = ({ onClick }) => {
   return (
     <button
       type="button"
-      className="burger-menu__button"
+      className="burger-menu-button"
       onClick={onClick}
     >
-      <span className="burger-menu__button-line"></span>
-      <span className="burger-menu__button-line"></span>
-      <span className="burger-menu__button-line"></span>
+      <span className="burger-menu-button__line"></span>
+      <span className="burger-menu-button__line"></span>
+      <span className="burger-menu-button__line"></span>
     </button>
   );
 };

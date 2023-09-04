@@ -14,11 +14,11 @@ const FormInput = (props) => {
       </label>
       <input
         id={`${name}`}
-        type={{ name } === 'name' ? 'text' : `${name}`}
+        type={name === 'name' ? 'text' : name}
         className={`auth__form-input auth__form-input_${name}`}
-        placeholder={``}
+        placeholder={`Введите ${title}`}
         name={`${name}-input`}
-        autoComplete="off"
+        autoComplete="new-password"
         required={true}
         minLength="2"
         maxLength="30"

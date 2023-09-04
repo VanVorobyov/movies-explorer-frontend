@@ -25,7 +25,7 @@
   line-height: normal;
 }
 
-.footer__links__content {
+.footer__links-content {
   width: 100%;
   margin: 19px 0 0 0;
 
@@ -90,7 +90,7 @@
     font-size: 12px;
   }
 
-  .footer__links__content {
+  .footer__links-content {
     margin: 20px 0 0 0;
     padding-top: 28px;
 

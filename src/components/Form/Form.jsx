@@ -6,7 +6,7 @@ import logo from '../../images/header__logo.svg';
 const Form = (props) => {
   const { title, children, onSubmit, name, isValid, isDisabled, isLoading, loadingText, buttonText, link, text, linkText } = props;
   return (
-    <>
+    <div className="auth">
       <form
         action="#"
         method="post"
@@ -17,7 +17,7 @@ const Form = (props) => {
         onSubmit={onSubmit}
       >
         <Link
-          className="auth__form__logo"
+          className="auth__form-logo"
           to="/"
         >
           <img
@@ -25,7 +25,7 @@ const Form = (props) => {
             alt="Логотип"
           />
         </Link>
-        <h1 className="auth__form__title">{title}</h1>
+        <h1 className="auth__form-title">{title}</h1>
 
         {children}
 
@@ -50,7 +50,7 @@ const Form = (props) => {
           </Link>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

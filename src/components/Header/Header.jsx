@@ -8,10 +8,11 @@ import logo from '../../images/header__logo.svg';
 const Header = ({ isLoggedIn, onClick }) => {
   const path = useLocation().pathname;
   const isPromo = path === '/';
+  const isMovies = path === '/movies';
 
   return (
     <header className={`header ${isPromo ? 'header_colored' : ''} `}>
-      <div className="header__content">
+      <div className={`header__content ${isMovies ? 'header__content_indent' : ''}`}>
         <Link
           className="header__logo"
           to="/"

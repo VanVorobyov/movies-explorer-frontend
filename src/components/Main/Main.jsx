@@ -10,18 +10,20 @@ import Footer from '../Footer/Footer';
 const Main = (props) => {
   const { isLoggedIn, onBurgerButtonClick } = props;
   return (
-    <main>
+    <>
       <Header
         isLoggedIn={isLoggedIn}
         onClick={onBurgerButtonClick}
       />
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
-      <Portfolio />
+      <main>
+        <Promo />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+        <Portfolio />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 };
 
