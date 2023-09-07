@@ -1,10 +1,11 @@
-import React from 'react';
+import { React } from 'react';
 import { Link } from 'react-router-dom';
 import './Form.css';
 import logo from '../../images/header__logo.svg';
 
 const Form = (props) => {
-  const { title, children, onSubmit, name, isValid, isDisabled, isLoading, loadingText, buttonText, link, text, linkText } = props;
+  const { title, children, onSubmit, name, isLoading, loadingText, buttonText, link, text, linkText, isValid, isDisabled } = props;
+
   return (
     <div className="auth">
       <form
@@ -30,10 +31,7 @@ const Form = (props) => {
         {children}
 
         <button
-          className={`auth__form-button auth__form-button_${name}
-
-          //${!isValid || isDisabled ? 'auth__form-button_disabled' : ''}
-          `}
+          className={`auth__form-button auth__form-button_${name} ${!isValid || isDisabled ? 'auth__form-button_disabled' : ''}`}
           type="submit"
           disabled={!isValid || isDisabled}
         >

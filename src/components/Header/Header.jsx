@@ -23,9 +23,12 @@ const Header = ({ isLoggedIn, onClick }) => {
           />
         </Link>
         <div className="header__navigation">
-          <Navigation isLoggedIn={isLoggedIn} />
+          <Navigation
+            isLoggedIn={isLoggedIn}
+            isPromo={isPromo}
+          />
         </div>
-        {!isPromo && <BurgerButton onClick={onClick} />}
+        {isLoggedIn && <BurgerButton onClick={onClick} />}
       </div>
     </header>
   );

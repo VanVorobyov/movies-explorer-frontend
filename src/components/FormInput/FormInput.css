@@ -32,8 +32,7 @@
 }
 
 .auth__input-error {
-  height: 18px;
-  margin-top: 6px;
+  height: 24px;
 
   color: #ff3055;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
