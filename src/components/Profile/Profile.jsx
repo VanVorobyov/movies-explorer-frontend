@@ -1,21 +1,61 @@
-import React from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Profile.css';
 import Header from '../Header/Header';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
+import useValidation from '../../hooks/useValidation';
 
 const Profile = (props) => {
-  const { name, isValid, isDisabled, isLoading, loadingText, buttonText, onBurgerButtonClick } = props;
+  const currentUser = useContext(CurrentUserContext);
+  const { isLoading, loadingText, buttonText, onBurgerButtonClick, onUpdateUser, onLogOut, isApiError, setIsApiError } = props;
+  const { values, handleChange, isValid, errors, resetForm } = useValidation();
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [isNotChange, setIsNotChange] = useState(false);
+  const [isNotChangeInfo, setIsNotChangeInfo] = useState('');
+
+  useEffect(() => {
+    if (currentUser) {
+      resetForm(currentUser);
+    }
+  }, [currentUser, resetForm]);
+
+  useEffect(() => {
+    if (currentUser.name === values.name && currentUser.email === values.email) {
+      setIsNotChange(true);
+      setIsNotChangeInfo('Введённая информация соответствует текущим данным пользователя');
+    } else {
+      setIsNotChange(false);
+      setIsNotChangeInfo('');
+    }
+  }, [values, currentUser]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (isValid && isSubmit) {
+      onUpdateUser({
+        name: values.name,
+        email: values.email,
+      });
+      setIsSubmit(false);
+      setIsEditing(false);
+      console.log({
+        name: values.name,
+        email: values.email,
+      });
+    }
+  }
   return (
     <>
       <Header onClick={onBurgerButtonClick} />
       <main>
         <section className="profile">
-          <h1 className="profile__title">Привет, Иван {name}!</h1>
+          <h1 className="profile__title">Привет, {currentUser.name}!</h1>
           <form
             id="form"
             className="profile__form"
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
             noValidate
           >
             <label
@@ -33,8 +73,9 @@ const Profile = (props) => {
                 minLength="2"
                 maxLength="40"
                 required={true}
-                // onChange={handleChange}
-                // value={values.name || ''}
+                readOnly={!isEditing}
+                onChange={handleChange}
+                value={values.name || ''}
               />
             </label>
             <label
@@ -52,40 +93,46 @@ const Profile = (props) => {
                 minLength="2"
                 maxLength="40"
                 required
-                // onChange={handleChange}
-                // value={values.email || ''}
+                readOnly={!isEditing}
+                onChange={handleChange}
+                value={values.email || ''}
               />
             </label>
-            <span className="profile__input-error">При обновлении профиля произошла ошибка.</span>
+            <span className="profile__input-error">{errors.name || errors.email || isApiError || (isEditing && isNotChangeInfo)}</span>
 
-            {/* <button
-            className={`profile__form-button-save
-            //${!isValid || isDisabled ? 'profile__form-button-save_disabled' : ''}
-            `}
-            type="submit"
-            disabled={!isValid || isDisabled}
-            >
-            Сохранить{isLoading ? loadingText : buttonText}
-          </button> */}
-
-            <button
-              type="submit"
-              className="profile__form-button-edit"
-            >
-              Редактировать
-            </button>
-
-            {/* <button
-            type="submit"
-            className="profile__form-button-sign-out"
-          > */}
-            <Link
-              className="profile__form-button-sign-out-link"
-              to="/"
-            >
-              Выйти из аккаунта
-            </Link>
-            {/* </button> */}
+            {isEditing ? (
+              <button
+                type="submit"
+                className={`profile__form-button-save ${!isValid || isNotChange ? 'profile__form-button-save_disabled' : ''}`}
+                disabled={!isValid || isNotChange}
+                onClick={() => {
+                  setIsSubmit(true);
+                }}
+              >
+                Сохранить{isLoading ? loadingText : buttonText}
+              </button>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="profile__form-button-edit"
+                  // disabled={isNotChange}
+                  onClick={() => {
+                    setIsEditing(true);
+                    setIsApiError('');
+                  }}
+                >
+                  Редактировать
+                </button>
+                <Link
+                  className="profile__form-button-sign-out-link"
+                  to="/"
+                  onClick={onLogOut}
+                >
+                  Выйти из аккаунта
+                </Link>
+              </>
+            )}
           </form>
         </section>
       </main>

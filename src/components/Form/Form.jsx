@@ -4,7 +4,22 @@ import './Form.css';
 import logo from '../../images/header__logo.svg';
 
 const Form = (props) => {
-  const { title, children, onSubmit, name, isLoading, loadingText, buttonText, link, text, linkText, isValid, isDisabled } = props;
+  const {
+    title,
+    children,
+    onSubmit,
+    name,
+    isLoading,
+    loadingText,
+    buttonText,
+    link,
+    text,
+    linkText,
+    isValid,
+    isDisabled,
+    isApiError,
+    setIsApiError,
+  } = props;
 
   return (
     <div className="auth">
@@ -30,6 +45,7 @@ const Form = (props) => {
 
         {children}
 
+        <span className="auth__form-error">{isApiError}</span>
         <button
           className={`auth__form-button auth__form-button_${name} ${!isValid || isDisabled ? 'auth__form-button_disabled' : ''}`}
           type="submit"
@@ -43,6 +59,7 @@ const Form = (props) => {
           <Link
             to={link}
             className="auth__form-link"
+            onClick={() => setIsApiError('')}
           >
             {linkText}
           </Link>

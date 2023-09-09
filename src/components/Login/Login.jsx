@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import Form from '../Form/Form';
 import FormInput from '../FormInput/FormInput';
-import useValidation from '../../utils/hooks/useValidation';
+import useValidation from '../../hooks/useValidation';
 
 const Login = (props) => {
-  const { onLogin, isLoading, isLoggedIn } = props;
+  const { onLogin, isLoading, isLoggedIn, isApiError, setIsApiError } = props;
   const { values, handleChange, resetForm, isValid, isDisabled, errors } = useValidation({ email: '', password: '' });
 
   function handleSubmit(e) {
@@ -26,6 +26,8 @@ const Login = (props) => {
           isDisabled={isDisabled}
           isLoading={isLoading}
           isLoggedIn={isLoggedIn}
+          isApiError={isApiError}
+          setIsApiError={setIsApiError}
           loadingText={`Войти...`}
           buttonText={`Войти`}
           link={`/signup`}
