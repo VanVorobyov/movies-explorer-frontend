@@ -22,6 +22,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false);
   const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
   const [isSuccess, setIsSuccess] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -43,6 +44,7 @@ const App = () => {
   const handleError = (err) => {
     if (err === 'Ошибка: 409 Conflict') return setIsApiError('Пользователь с таким email уже существует');
     if (err === 'Ошибка: 401 Unauthorized') return setIsApiError('Пользователь с таким email не найден, необходимо зарегистрироваться');
+    if (err) return setIsApiError(`Что то пошло не так... Попробуйте позже`);
   };
 
   const closeAll = () => {
@@ -99,6 +101,27 @@ const App = () => {
     handleSubmit(makeRequest);
   };
 
+  const handleSaveMovie = (movie) => {
+    mainApi
+      .saveMovie(movie)
+      .then((newMovie) => {
+        setSavedMovies([newMovie, ...savedMovies]);
+      })
+      .catch((err) => {
+        setIsSuccess(false);
+        console.log(err);
+      });
+  };
+
+  const handleDeleteMovie = (movie) => {
+    const makeRequest = () => {
+      return mainApi.deleteMovie(movie._id).then(() => {
+        setSavedMovies((state) => state.filter((item) => item._id !== movie._id));
+      });
+    };
+    handleSubmit(makeRequest);
+  };
+
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
@@ -118,10 +141,11 @@ const App = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      Promise.all([mainApi.getUserInfo(), moviesApi.getInitialCards()])
-        .then(([userInfo, initialCards]) => {
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies(), moviesApi.getInitialCards()])
+        .then(([userInfo, movies, getInitialCards]) => {
           setCurrentUser(userInfo);
-          setMovies(initialCards.reverse());
+          setSavedMovies(movies.reverse());
+          setMovies(getInitialCards);
         })
         .catch((err) => console.log(err));
     }
@@ -148,7 +172,9 @@ const App = () => {
                 element={Movies}
                 isLoggedIn={isLoggedIn}
                 movies={movies}
+                savedMovies={savedMovies}
                 isLoading={isLoading}
+                onSaveMovie={handleSaveMovie}
                 onBurgerButtonClick={handleBurgerMenuOpen}
               />
             }
@@ -159,8 +185,10 @@ const App = () => {
               <ProtectedRoute
                 element={SavedMovies}
                 isLoggedIn={isLoggedIn}
-                movies={movies}
                 isLoading={isLoading}
+                movies={movies}
+                savedMovies={savedMovies}
+                onMovieDelete={handleDeleteMovie}
                 onBurgerButtonClick={handleBurgerMenuOpen}
               />
             }

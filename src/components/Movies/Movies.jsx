@@ -5,13 +5,17 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
 const Movies = (props) => {
-  const { movies, onBurgerButtonClick } = props;
+  const { movies, savedMovies, onSaveMovie, onBurgerButtonClick } = props;
   return (
     <>
       <Header onClick={onBurgerButtonClick} />
       <main>
         <SearchForm />
-        <MoviesCardList movies={movies} />
+        <MoviesCardList
+          movies={movies}
+          savedMovies={savedMovies}
+          onSaveMovie={onSaveMovie}
+        />
       </main>
       <Footer />
     </>

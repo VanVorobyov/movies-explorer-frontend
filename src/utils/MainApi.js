@@ -38,7 +38,17 @@ class Api {
     });
   }
 
-  saveMovie({ name, link }) {
+  getMovies() {
+    const token = localStorage.getItem('jwt');
+    return this._request(`${this._baseUrl}/movies`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  saveMovie({ country, director, duration, year, description, image, trailerLink, id, nameRU, nameEN }) {
     const token = localStorage.getItem('jwt');
     return this._request(`${this._baseUrl}/movies`, {
       method: 'POST',
@@ -46,13 +56,25 @@ class Api {
         authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: name, link: link }),
+      body: JSON.stringify({
+        country: country,
+        director: director,
+        duration: duration,
+        year: year,
+        description: description,
+        image: 'https://api.nomoreparties.co' + image.url,
+        trailerLink: trailerLink,
+        thumbnail: 'https://api.nomoreparties.co' + image.formats.thumbnail.url,
+        movieId: id,
+        nameRU: nameRU,
+        nameEN: nameEN,
+      }),
     });
   }
 
-  deleteMovie(movie) {
+  deleteMovie(movieId) {
     const token = localStorage.getItem('jwt');
-    return this._request(`${this._baseUrl}/movies/${movie}`, {
+    return this._request(`${this._baseUrl}/movies/${movieId}`, {
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,
