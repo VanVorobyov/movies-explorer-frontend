@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import './MoviesCardList.css';
-import MoviesCard from '../MoviesCard/MoviesCard';
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import "./MoviesCardList.css";
+import MoviesCard from "../MoviesCard/MoviesCard";
 
 const MoviesCardList = ({ movies, savedMovies, onSaveMovie, onMovieDelete }) => {
   const path = useLocation().pathname;
-  const isSavedMovies = path === '/saved-movies';
+  const isSavedMovies = path === "/saved-movies";
 
   const [isNumberOfMovies, setNumberOfMovies] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
@@ -42,7 +42,7 @@ const MoviesCardList = ({ movies, savedMovies, onSaveMovie, onMovieDelete }) => 
 
   useEffect(() => {
     setTimeout(() => {
-      window.addEventListener('resize', handleNumberOfMovies);
+      window.addEventListener("resize", handleNumberOfMovies);
     }, 500);
   });
 
@@ -71,26 +71,12 @@ const MoviesCardList = ({ movies, savedMovies, onSaveMovie, onMovieDelete }) => 
             <>
               {movies.slice(0, isNumberOfMovies).map((movie) => {
                 const isMovieInSaved = isMovieSaved(movie, savedMovies);
-                return (
-                  <MoviesCard
-                    key={movie.id}
-                    movie={movie}
-                    movies={movies}
-                    savedMovies={savedMovies}
-                    isSaved={isMovieInSaved}
-                    setIsSaved={setIsSaved}
-                    onSaveMovie={onSaveMovie}
-                  />
-                );
+                return <MoviesCard key={movie.id} movie={movie} movies={movies} savedMovies={savedMovies} isSaved={isMovieInSaved} setIsSaved={setIsSaved} onSaveMovie={onSaveMovie} />;
               })}
             </>
           )}
         </ul>
-        <button
-          type="button"
-          className={`movies-card-list__button ${(isSavedMovies || movies.length <= isNumberOfMovies) && 'movies-card-list__button_hidden'}`}
-          onClick={handleShowMore}
-        >
+        <button type="button" className={`movies-card-list__button ${(isSavedMovies || movies.length <= isNumberOfMovies) && "movies-card-list__button_hidden"}`} onClick={handleShowMore}>
           Ещё
         </button>
       </div>
