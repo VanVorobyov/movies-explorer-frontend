@@ -32,6 +32,12 @@ const SavedMovies = (props) => {
       localStorage.setItem('searchedSavedMovies', JSON.stringify(searchedSavedMovies));
       localStorage.setItem('searchSavedMovies', JSON.stringify(searchSavedMovies.trim()));
       setSearchedSavedMovies(searchedSavedMovies);
+
+      if (isShortSavedMovies) {
+        localStorage.setItem('filteredSavedMovies', JSON.stringify(FilterMovies(searchedSavedMovies)));
+        setShortSavedMovies(JSON.parse(localStorage.getItem('filteredSavedMovies')));
+      }
+
       console.log(searchedSavedMovies);
     }
   };

@@ -24,7 +24,7 @@ const Movies = (props) => {
     if (searchMovies.trim() === '') {
       console.log('пустой запрос');
       setIsQueryError(true);
-
+      setSearchedMovies([]);
       localStorage.removeItem('searchedMovies');
       localStorage.removeItem('searchMovies');
     } else {
@@ -35,6 +35,11 @@ const Movies = (props) => {
       localStorage.setItem('searchMovies', JSON.stringify(searchMovies.trim()));
 
       setSearchedMovies(searchedMovies);
+
+      if (isShortMovies) {
+        localStorage.setItem('filteredMovies', JSON.stringify(FilterMovies(searchedMovies)));
+        setShortMovies(JSON.parse(localStorage.getItem('filteredMovies')));
+      }
       console.log(searchedMovies);
     }
   };
@@ -53,7 +58,7 @@ const Movies = (props) => {
     } else {
       setShortMovies(searchedMovies);
     }
-  }, [isShortMovies, searchedMovies]);
+  }, [isShortMovies]);
 
   useEffect(() => {
     const storedSearchedMovies = JSON.parse(localStorage.getItem('searchedMovies'));
