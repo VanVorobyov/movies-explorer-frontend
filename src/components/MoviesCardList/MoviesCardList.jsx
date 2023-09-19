@@ -52,19 +52,21 @@ const MoviesCardList = ({ movies, savedMovies, onSaveMovie, onMovieDelete }) => 
         <ul className="movies-cards">
           {isSavedMovies && (
             <>
-              {savedMovies.map((movie) => {
-                return (
-                  <MoviesCard
-                    key={movie._id}
-                    movie={movie}
-                    // movies={movies}
-                    savedMovies={savedMovies}
-                    isSaved={isSaved}
-                    setIsSaved={setIsSaved}
-                    onMovieDelete={onMovieDelete}
-                  />
-                );
-              })}
+              {savedMovies
+                ? savedMovies.map((movie) => {
+                    return (
+                      <MoviesCard
+                        key={movie._id}
+                        movie={movie}
+                        movies={movies}
+                        savedMovies={savedMovies}
+                        isSaved={isSaved}
+                        setIsSaved={setIsSaved}
+                        onMovieDelete={onMovieDelete}
+                      />
+                    );
+                  })
+                : []}
             </>
           )}
           {!isSavedMovies && (

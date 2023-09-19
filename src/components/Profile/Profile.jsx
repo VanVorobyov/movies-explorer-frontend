@@ -24,7 +24,7 @@ const Profile = (props) => {
   useEffect(() => {
     if (currentUser.name === values.name && currentUser.email === values.email) {
       setIsNotChange(true);
-      setIsNotChangeInfo('Введённая информация соответствует текущим данным пользователя');
+      setIsNotChangeInfo('Измените имя или email для сохранения');
     } else {
       setIsNotChange(false);
       setIsNotChangeInfo('');
@@ -35,15 +35,11 @@ const Profile = (props) => {
     e.preventDefault();
     if (isValid && isSubmit) {
       onUpdateUser({
-        name: values.name,
-        email: values.email,
+        name: values.name.trim(),
+        email: values.email.trim(),
       });
       setIsSubmit(false);
       setIsEditing(false);
-      console.log({
-        name: values.name,
-        email: values.email,
-      });
     }
   }
   return (

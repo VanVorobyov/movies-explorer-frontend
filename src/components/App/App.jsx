@@ -36,6 +36,12 @@ const App = () => {
 
   const handleLogOut = () => {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('searchMovies');
+    localStorage.removeItem('searchedMovies');
+    localStorage.removeItem('filteredMovies');
+    localStorage.removeItem('searchSavedMovies');
+    localStorage.removeItem('searchedSavedMovies');
+    localStorage.removeItem('filteredSavedMovies');
     setIsLoggedIn(false);
     setUserEmail('');
     navigate('/');

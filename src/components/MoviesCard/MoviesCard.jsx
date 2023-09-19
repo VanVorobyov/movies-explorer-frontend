@@ -12,7 +12,6 @@ const MoviesCard = (props) => {
 
   function handleSaveMovieClick() {
     if (savedMovies.filter((m) => m.movieId === movie.id)) {
-      setIsLiked(true);
       setIsSaved(true);
       onSaveMovie(movie);
     }
@@ -22,6 +21,14 @@ const MoviesCard = (props) => {
     onMovieDelete(movie);
     setIsSaved(false);
   }
+
+  useEffect(() => {
+    if (isSaved) {
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
+  }, [isSaved]);
 
   return (
     <li className="card">

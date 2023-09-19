@@ -2,11 +2,34 @@ import React from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-const SearchForm = ({ handleCheckboxClick, handleShortMovies, isShortMovies }) => {
+const SearchForm = ({
+  handleCheckboxClick,
+  handleSavedCheckboxClick,
+  handleShortMovies,
+  handleSavedShortMovies,
+  handleSubmit,
+  isShortMovies,
+  isShortSavedMovies,
+  isQueryError,
+  onQueryError,
+  searchMovies,
+  onSearchMovies,
+  savedMovies,
+}) => {
+  const handleChange = (event) => {
+    const { value } = event.target;
+    onSearchMovies(value);
+    onQueryError(false);
+  };
+
   return (
     <section className="search">
       <div className="search__content">
-        <form className="search-form">
+        <form
+          className="search-form"
+          onSubmit={handleSubmit}
+          noValidate
+        >
           <input
             id="search-input"
             type="text"
@@ -15,7 +38,10 @@ const SearchForm = ({ handleCheckboxClick, handleShortMovies, isShortMovies }) =
             autoComplete="off"
             required={true}
             minLength="2"
+            value={searchMovies.trim()}
+            onChange={handleChange}
           />
+          <span className="search__input-error">{isQueryError && 'Нужно ввести ключевое слово'}</span>
           <button
             className="search__button"
             type="submit"
@@ -25,8 +51,12 @@ const SearchForm = ({ handleCheckboxClick, handleShortMovies, isShortMovies }) =
         </form>
         <FilterCheckbox
           handleCheckboxClick={handleCheckboxClick}
+          handleSavedCheckboxClick={handleSavedCheckboxClick}
+          handleSavedShortMovies={handleSavedShortMovies}
           handleShortMovies={handleShortMovies}
           isShortMovies={isShortMovies}
+          isShortSavedMovies={isShortSavedMovies}
+          savedMovies={savedMovies}
         />
       </div>
     </section>
