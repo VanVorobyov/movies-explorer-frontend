@@ -24,6 +24,7 @@ const Movies = (props) => {
 
     if (searchMovies.trim() === '') {
       setIsQueryError(true);
+      setIsNotFound(false);
       setSearchedMovies([]);
 
       localStorage.removeItem('searchedMovies');

@@ -22,7 +22,7 @@ const SavedMovies = (props) => {
 
   useEffect(() => {
     if (searchedSavedMovies.length === 0) {
-      setIsNotFound(true);
+      !isLoading && setIsNotFound(true);
     } else {
       setIsNotFound(false);
     }
@@ -32,6 +32,7 @@ const SavedMovies = (props) => {
     e.preventDefault();
     if (searchQuery.trim() === '') {
       setIsQueryError(true);
+
       setSearchedSavedMovies(savedMovies);
       localStorage.setItem('searchedSavedMovies', JSON.stringify(savedMovies));
       localStorage.setItem('filteredSavedMovies', JSON.stringify(FilterMovies(savedMovies)));
@@ -89,6 +90,7 @@ const SavedMovies = (props) => {
           onQueryError={setIsQueryError}
           savedMovies={savedMovies}
           isNotFound={isNotFound}
+          isLoading={isLoading}
         />
         <MoviesCardList
           movies={movies}

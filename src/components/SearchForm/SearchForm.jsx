@@ -15,6 +15,7 @@ const SearchForm = ({
   onSearchMovies,
   savedMovies,
   isNotFound,
+  isLoading,
 }) => {
   const handleChange = (event) => {
     const { value } = event.target;
