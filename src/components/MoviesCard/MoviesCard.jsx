@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './MoviesCard.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import DurationConverter from '../../utils/DurationConverter';
 
 const MoviesCard = (props) => {
@@ -36,11 +36,16 @@ const MoviesCard = (props) => {
         <h2 className="card__title">{movie.nameRU}</h2>
         <span className="card__duration">{DurationConverter(movie.duration)}</span>
       </div>
-      <img
-        src={isSavedMovies ? movie.image : `https://api.nomoreparties.co${movie.image.url}`}
-        alt={`Обложка фильма ${movie.nameRU}`}
-        className="card__image"
-      />
+      <Link
+        target="_blank"
+        to={movie.trailerLink}
+      >
+        <img
+          src={isSavedMovies ? movie.image : `https://api.nomoreparties.co${movie.image.url}`}
+          alt={`Обложка фильма ${movie.nameRU}`}
+          className="card__image"
+        />
+      </Link>
       {isSavedMovies ? (
         <button
           type="button"
