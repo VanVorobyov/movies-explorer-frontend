@@ -14,6 +14,7 @@ const SearchForm = ({
   searchMovies,
   onSearchMovies,
   savedMovies,
+  isNotFound,
 }) => {
   const handleChange = (event) => {
     const { value } = event.target;
@@ -40,7 +41,8 @@ const SearchForm = ({
             value={searchMovies.trim()}
             onChange={handleChange}
           />
-          <span className="search__input-error">{isQueryError && 'Нужно ввести ключевое слово'}</span>
+          {isQueryError && <span className="search__input-error">Нужно ввести ключевое слово</span>}
+          {isNotFound && !isQueryError && <span className="search__input-error">Ничего не найдено</span>}
           <button
             className="search__button"
             type="submit"

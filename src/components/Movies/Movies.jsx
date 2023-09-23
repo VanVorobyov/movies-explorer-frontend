@@ -19,14 +19,6 @@ const Movies = (props) => {
     setSearchMovies(value);
   };
 
-  useEffect(() => {
-    if (searchedMovies.length === 0) {
-      setIsNotFound(true);
-    } else {
-      setIsNotFound(false);
-    }
-  }, [searchedMovies]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -48,6 +40,12 @@ const Movies = (props) => {
       if (isShortMovies) {
         localStorage.setItem('filteredMovies', JSON.stringify(FilterMovies(searchedMovies)));
         setShortMovies(JSON.parse(localStorage.getItem('filteredMovies')));
+      }
+
+      if (searchedMovies.length === 0) {
+        setIsNotFound(true);
+      } else {
+        setIsNotFound(false);
       }
     }
   };
