@@ -1,15 +1,7 @@
 import React from 'react';
 import './FilterCheckbox.css';
 
-const FilterCheckbox = ({
-  handleCheckboxClick,
-  handleSavedCheckboxClick,
-  handleShortMovies,
-  handleSavedShortMovies,
-  isShortMovies,
-  isShortSavedMovies,
-  savedMovies,
-}) => {
+const FilterCheckbox = ({ handleCheckboxClick, handleSavedCheckboxClick, handleShortMovies, isShortMovies, isShortSavedMovies, savedMovies }) => {
   return (
     <div className="filter">
       <input
@@ -19,7 +11,7 @@ const FilterCheckbox = ({
         defaultChecked={savedMovies ? isShortSavedMovies : isShortMovies}
         onClick={() => {
           savedMovies ? handleSavedCheckboxClick() : handleCheckboxClick();
-          savedMovies ? handleSavedShortMovies() : handleShortMovies();
+          !savedMovies && handleShortMovies();
         }}
       />
       <label

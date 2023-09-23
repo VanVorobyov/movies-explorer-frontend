@@ -35,15 +35,12 @@ const App = () => {
   const handleBurgerMenuOpen = () => setBurgerMenuOpen(true);
 
   const handleLogOut = () => {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('searchMovies');
-    localStorage.removeItem('searchedMovies');
-    localStorage.removeItem('filteredMovies');
-    localStorage.removeItem('searchSavedMovies');
-    localStorage.removeItem('searchedSavedMovies');
-    localStorage.removeItem('filteredSavedMovies');
+    localStorage.clear();
     setIsLoggedIn(false);
-    setUserEmail('');
+    setCurrentUser({
+      name: '',
+      email: '',
+    });
     navigate('/');
   };
 
@@ -58,6 +55,7 @@ const App = () => {
   };
 
   const handleRegisterUser = (name, email, password) => {
+    setIsLoading(true);
     auth
       .register(name, email, password)
       .then(() => auth.login(email, password))
@@ -75,6 +73,7 @@ const App = () => {
   };
 
   const handleLoginUser = (email, password) => {
+    setIsLoading(true);
     auth
       .login(email, password)
       .then((data) => {
@@ -92,7 +91,12 @@ const App = () => {
 
   const handleSubmit = (request) => {
     setIsLoading(true);
+
     request()
+      .then(() => {
+        setIsSuccess(true);
+        setTimeout(() => setIsSuccess(false), 10000);
+      })
       .catch((err) => {
         handleError(err);
         console.error(err);
@@ -108,15 +112,16 @@ const App = () => {
   };
 
   const handleSaveMovie = (movie) => {
+    setIsLoading(true);
     mainApi
       .saveMovie(movie)
       .then((newMovie) => {
         setSavedMovies([newMovie, ...savedMovies]);
       })
       .catch((err) => {
-        setIsSuccess(false);
         console.log(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const handleDeleteMovie = (movie) => {
@@ -205,6 +210,7 @@ const App = () => {
               <ProtectedRoute
                 element={Profile}
                 email={userEmail}
+                isSuccess={isSuccess}
                 isLoggedIn={isLoggedIn}
                 onBurgerButtonClick={handleBurgerMenuOpen}
                 onUpdateUser={handleUpdateUser}

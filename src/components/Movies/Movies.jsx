@@ -7,24 +7,33 @@ import FilterMovies from '../../utils/FilterMovies';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 const Movies = (props) => {
-  const { movies, savedMovies, onSaveMovie, onBurgerButtonClick } = props;
+  const { isLoading, movies, savedMovies, onSaveMovie, onBurgerButtonClick } = props;
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [shortMovies, setShortMovies] = useState([]);
   const [isShortMovies, setIsShortMovies] = useLocalStorage('isShortMovies', false);
   const [searchMovies, setSearchMovies] = useState('');
   const [isQueryError, setIsQueryError] = useState(false);
+  const [isNotFound, setIsNotFound] = useState(false);
 
   const handleSearchMovies = (value) => {
     setSearchMovies(value);
   };
 
+  useEffect(() => {
+    if (searchedMovies.length === 0) {
+      setIsNotFound(true);
+    } else {
+      setIsNotFound(false);
+    }
+  }, [searchedMovies]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (searchMovies.trim() === '') {
-      console.log('пустой запрос');
       setIsQueryError(true);
       setSearchedMovies([]);
+
       localStorage.removeItem('searchedMovies');
       localStorage.removeItem('searchMovies');
     } else {
@@ -40,7 +49,6 @@ const Movies = (props) => {
         localStorage.setItem('filteredMovies', JSON.stringify(FilterMovies(searchedMovies)));
         setShortMovies(JSON.parse(localStorage.getItem('filteredMovies')));
       }
-      console.log(searchedMovies);
     }
   };
 
@@ -58,7 +66,7 @@ const Movies = (props) => {
     } else {
       setShortMovies(searchedMovies);
     }
-  }, [isShortMovies]);
+  }, [isShortMovies, searchedMovies]);
 
   useEffect(() => {
     const storedSearchedMovies = JSON.parse(localStorage.getItem('searchedMovies'));
@@ -85,11 +93,13 @@ const Movies = (props) => {
           onSearchMovies={handleSearchMovies}
           isQueryError={isQueryError}
           onQueryError={setIsQueryError}
+          isNotFound={isNotFound}
         />
         <MoviesCardList
           movies={isShortMovies ? shortMovies : searchedMovies}
           savedMovies={savedMovies}
           onSaveMovie={onSaveMovie}
+          isLoading={isLoading}
         />
       </main>
       <Footer />

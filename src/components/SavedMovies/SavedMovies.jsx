@@ -7,70 +7,73 @@ import FilterMovies from '../../utils/FilterMovies';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 const SavedMovies = (props) => {
-  const { movies, savedMovies, onMovieDelete, onBurgerButtonClick } = props;
+  const { isLoading, movies, savedMovies, onMovieDelete, onBurgerButtonClick } = props;
+
   const [searchedSavedMovies, setSearchedSavedMovies] = useState([]);
-  const [searchSavedMovies, setSearchSavedMovies] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [isShortSavedMovies, setIsShortSavedMovies] = useLocalStorage('isShortSavedMovies', false);
   const [shortSavedMovies, setShortSavedMovies] = useState([]);
   const [isQueryError, setIsQueryError] = useState(false);
-
-  const handleSearchMovies = (value) => {
-    setSearchSavedMovies(value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (searchSavedMovies.trim() === '') {
-      console.log('пустой запрос');
-      setIsQueryError(true);
-      setSearchedSavedMovies(savedMovies);
-      localStorage.removeItem('searchedSavedMovies');
-      localStorage.removeItem('searchSavedMovies');
-    } else {
-      setIsQueryError(false);
-      const searchedSavedMovies = savedMovies.filter((movie) => movie.nameRU.toLowerCase().includes(searchSavedMovies.toLowerCase().trim()));
-      localStorage.setItem('searchedSavedMovies', JSON.stringify(searchedSavedMovies));
-      localStorage.setItem('searchSavedMovies', JSON.stringify(searchSavedMovies.trim()));
-      setSearchedSavedMovies(searchedSavedMovies);
-
-      if (isShortSavedMovies) {
-        localStorage.setItem('filteredSavedMovies', JSON.stringify(FilterMovies(searchedSavedMovies)));
-        setShortSavedMovies(JSON.parse(localStorage.getItem('filteredSavedMovies')));
-      }
-
-      console.log(searchedSavedMovies);
-    }
-  };
+  const [isNotFound, setIsNotFound] = useState(false);
 
   const handleSavedCheckboxClick = () => {
     setIsShortSavedMovies((prev) => !prev);
   };
 
-  const handleSavedShortMovies = () => {
-    localStorage.setItem('filteredSavedMovies', JSON.stringify(FilterMovies(searchedSavedMovies)));
+  useEffect(() => {
+    if (searchedSavedMovies.length === 0) {
+      setIsNotFound(true);
+    } else {
+      setIsNotFound(false);
+    }
+  }, [searchedSavedMovies]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim() === '') {
+      setIsQueryError(true);
+      setSearchedSavedMovies(savedMovies);
+      localStorage.setItem('searchedSavedMovies', JSON.stringify(savedMovies));
+      localStorage.setItem('filteredSavedMovies', JSON.stringify(FilterMovies(savedMovies)));
+      localStorage.removeItem('searchQuery');
+    } else {
+      setIsQueryError(false);
+      const searchedSavedMovies = savedMovies.filter((movie) => movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase().trim()));
+
+      localStorage.setItem('searchQuery', JSON.stringify(searchQuery.trim()));
+      localStorage.setItem('searchedSavedMovies', JSON.stringify(searchedSavedMovies));
+      localStorage.setItem('filteredSavedMovies', JSON.stringify(FilterMovies(searchedSavedMovies)));
+
+      if (isShortSavedMovies) {
+        setShortSavedMovies(JSON.parse(localStorage.getItem('filteredSavedMovies')));
+      }
+    }
   };
 
   useEffect(() => {
+    const filteredMovies = savedMovies.filter((movie) => movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase().trim()));
+
     if (isShortSavedMovies) {
-      setShortSavedMovies(JSON.parse(localStorage.getItem('filteredSavedMovies')));
-    } else if (searchSavedMovies.trim() !== '') {
-      setShortSavedMovies(savedMovies);
+      const filteredShortMovies = FilterMovies(filteredMovies);
+      setShortSavedMovies(filteredShortMovies);
+      localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredShortMovies));
     } else {
-      setSearchedSavedMovies(savedMovies);
+      setSearchedSavedMovies(filteredMovies);
+      localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredMovies));
     }
-  }, [isShortSavedMovies, savedMovies]);
+  }, [savedMovies, searchQuery, isShortSavedMovies]);
 
   useEffect(() => {
-    const storedSearchedSavedMovies = JSON.parse(localStorage.getItem('searchedSavedMovies'));
-    const storedSearchSavedMovies = JSON.parse(localStorage.getItem('searchSavedMovies'));
-
-    if (storedSearchedSavedMovies) {
-      setSearchedSavedMovies(storedSearchedSavedMovies);
-    }
-    if (storedSearchSavedMovies) {
-      setSearchSavedMovies(storedSearchSavedMovies);
+    const storedSearchQuery = JSON.parse(localStorage.getItem('searchQuery'));
+    if (storedSearchQuery) {
+      setSearchQuery(storedSearchQuery);
     }
   }, []);
+
+  const handleSearchMovies = (value) => {
+    setSearchQuery(value);
+    localStorage.setItem('searchQuery', JSON.stringify(value));
+  };
 
   return (
     <>
@@ -78,19 +81,22 @@ const SavedMovies = (props) => {
       <main>
         <SearchForm
           handleSavedCheckboxClick={handleSavedCheckboxClick}
-          handleSavedShortMovies={handleSavedShortMovies}
           handleSubmit={handleSubmit}
           isShortSavedMovies={isShortSavedMovies}
-          searchMovies={searchSavedMovies}
+          searchMovies={searchQuery}
           onSearchMovies={handleSearchMovies}
           isQueryError={isQueryError}
           onQueryError={setIsQueryError}
           savedMovies={savedMovies}
+          isNotFound={isNotFound}
         />
         <MoviesCardList
           movies={movies}
           savedMovies={isShortSavedMovies ? shortSavedMovies : searchedSavedMovies}
           onMovieDelete={onMovieDelete}
+          isShortSavedMovies={isShortSavedMovies}
+          setShortSavedMovies={setShortSavedMovies}
+          isLoading={isLoading}
         />
       </main>
       <Footer />

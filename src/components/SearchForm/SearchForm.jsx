@@ -6,7 +6,6 @@ const SearchForm = ({
   handleCheckboxClick,
   handleSavedCheckboxClick,
   handleShortMovies,
-  handleSavedShortMovies,
   handleSubmit,
   isShortMovies,
   isShortSavedMovies,
@@ -52,7 +51,6 @@ const SearchForm = ({
         <FilterCheckbox
           handleCheckboxClick={handleCheckboxClick}
           handleSavedCheckboxClick={handleSavedCheckboxClick}
-          handleSavedShortMovies={handleSavedShortMovies}
           handleShortMovies={handleShortMovies}
           isShortMovies={isShortMovies}
           isShortSavedMovies={isShortSavedMovies}

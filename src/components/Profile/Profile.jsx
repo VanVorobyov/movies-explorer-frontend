@@ -7,7 +7,7 @@ import useValidation from '../../hooks/useValidation';
 
 const Profile = (props) => {
   const currentUser = useContext(CurrentUserContext);
-  const { isLoading, loadingText, buttonText, onBurgerButtonClick, onUpdateUser, onLogOut, isApiError, setIsApiError } = props;
+  const { isSuccess, isLoading, loadingText, buttonText, onBurgerButtonClick, onUpdateUser, onLogOut, isApiError, setIsApiError } = props;
   const { values, handleChange, isValid, errors, resetForm } = useValidation();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -94,8 +94,11 @@ const Profile = (props) => {
                 value={values.email || ''}
               />
             </label>
-            <span className="profile__input-error">{errors.name || errors.email || isApiError || (isEditing && isNotChangeInfo)}</span>
-
+            {isSuccess ? (
+              <span className="profile__input-success">Изменение профиля успешно</span>
+            ) : (
+              <span className="profile__input-error">{errors.name || errors.email || isApiError || (isEditing && isNotChangeInfo)}</span>
+            )}
             {isEditing ? (
               <button
                 type="submit"

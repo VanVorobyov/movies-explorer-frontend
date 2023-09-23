@@ -104,6 +104,10 @@
   .card__button {
     margin: 8px auto;
   }
+
+  .card__title {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 425px) {

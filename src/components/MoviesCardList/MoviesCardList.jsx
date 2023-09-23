@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import Preloader from '../Preloader/Preloader';
 
-const MoviesCardList = ({ movies, savedMovies, onSaveMovie, onMovieDelete }) => {
+const MoviesCardList = ({ isLoading, movies, savedMovies, onSaveMovie, onMovieDelete }) => {
   const path = useLocation().pathname;
   const isSavedMovies = path === '/saved-movies';
 
@@ -49,48 +50,56 @@ const MoviesCardList = ({ movies, savedMovies, onSaveMovie, onMovieDelete }) => 
   return (
     <section className="movies-card-list">
       <div className="movies-card-list__content">
-        <ul className="movies-cards">
-          {isSavedMovies && (
-            <>
-              {savedMovies
-                ? savedMovies.map((movie) => {
-                    return (
-                      <MoviesCard
-                        key={movie._id}
-                        movie={movie}
-                        movies={movies}
-                        savedMovies={savedMovies}
-                        isSaved={isSaved}
-                        setIsSaved={setIsSaved}
-                        onMovieDelete={onMovieDelete}
-                      />
-                    );
-                  })
-                : []}
-            </>
-          )}
-          {!isSavedMovies && (
-            <>
-              {movies.slice(0, isNumberOfMovies).map((movie) => {
-                const isMovieInSaved = isMovieSaved(movie, savedMovies);
-                return (
-                  <MoviesCard
-                    key={movie.id}
-                    movie={movie}
-                    movies={movies}
-                    savedMovies={savedMovies}
-                    isSaved={isMovieInSaved}
-                    setIsSaved={setIsSaved}
-                    onSaveMovie={onSaveMovie}
-                  />
-                );
-              })}
-            </>
-          )}
-        </ul>
+        {isLoading ? (
+          <Preloader /> // Show preloader if isLoading is true
+        ) : (
+          <ul className="movies-cards">
+            {isSavedMovies && (
+              <>
+                {savedMovies
+                  ? savedMovies.map((movie) => {
+                      return (
+                        <MoviesCard
+                          key={movie._id}
+                          movie={movie}
+                          movies={movies}
+                          savedMovies={savedMovies}
+                          isSaved={!isSaved}
+                          setIsSaved={setIsSaved}
+                          onMovieDelete={onMovieDelete}
+                        />
+                      );
+                    })
+                  : []}
+              </>
+            )}
+            {!isSavedMovies && (
+              <>
+                {movies
+                  ? movies.slice(0, isNumberOfMovies).map((movie) => {
+                      const isMovieInSaved = isMovieSaved(movie, savedMovies);
+                      return (
+                        <MoviesCard
+                          key={movie.id}
+                          movie={movie}
+                          movies={movies}
+                          savedMovies={savedMovies}
+                          isSaved={isMovieInSaved}
+                          setIsSaved={setIsSaved}
+                          onSaveMovie={onSaveMovie}
+                        />
+                      );
+                    })
+                  : []}
+              </>
+            )}
+          </ul>
+        )}
         <button
           type="button"
-          className={`movies-card-list__button ${(isSavedMovies || movies.length <= isNumberOfMovies) && 'movies-card-list__button_hidden'}`}
+          className={`movies-card-list__button ${
+            (isSavedMovies || (movies && movies.length <= isNumberOfMovies)) && 'movies-card-list__button_hidden'
+          }`}
           onClick={handleShowMore}
         >
           Ещё
