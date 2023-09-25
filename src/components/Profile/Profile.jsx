@@ -51,7 +51,9 @@ const Profile = (props) => {
   };
 
   useEffect(() => {
-    setIsApiError('');
+    return () => {
+      setIsApiError('');
+    };
   }, []);
 
   return (

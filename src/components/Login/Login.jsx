@@ -19,6 +19,12 @@ const Login = (props) => {
     setIsApiError('');
   }, []);
 
+  useEffect(() => {
+    return () => {
+      setIsApiError('');
+    };
+  }, []);
+
   return (
     <main>
       <section className="login">

@@ -20,6 +20,12 @@ const Register = (props) => {
     setIsApiError('');
   }, []);
 
+  useEffect(() => {
+    return () => {
+      setIsApiError('');
+    };
+  }, []);
+
   return (
     <main>
       <section className="register">
