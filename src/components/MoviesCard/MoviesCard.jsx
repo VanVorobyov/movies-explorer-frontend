@@ -1,25 +1,30 @@
 import { useState, useEffect } from 'react';
 import './MoviesCard.css';
 import { useLocation, Link } from 'react-router-dom';
-import DurationConverter from '../../utils/DurationConverter';
+import { convertDuration } from '../../utils/constants';
 
 const MoviesCard = (props) => {
-  const { movie, isSaved, setIsSaved, savedMovies, onSaveMovie, onMovieDelete } = props;
+  const { movie, isSaved, savedMovies, onSaveMovie, onMovieDelete } = props;
   const path = useLocation().pathname;
   const isSavedMovies = path === '/saved-movies';
 
   const [isLiked, setIsLiked] = useState(isSaved);
 
   function handleSaveMovieClick() {
-    if (savedMovies.filter((m) => m.movieId === movie.id)) {
-      setIsSaved(true);
+    if (isSaved) {
+      const movieToDelete = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id);
+      if (movieToDelete) {
+        onMovieDelete(movieToDelete);
+      }
+    } else {
       onSaveMovie(movie);
     }
+    setIsLiked(!isLiked);
   }
 
   function handleDeleteClick() {
     onMovieDelete(movie);
-    setIsSaved(false);
+    setIsLiked(false);
   }
 
   useEffect(() => {
@@ -34,7 +39,7 @@ const MoviesCard = (props) => {
     <li className="card">
       <div className="card__title-wrap">
         <h2 className="card__title">{movie.nameRU}</h2>
-        <span className="card__duration">{DurationConverter(movie.duration)}</span>
+        <span className="card__duration">{convertDuration(movie.duration)}</span>
       </div>
       <Link
         target="_blank"
@@ -57,7 +62,7 @@ const MoviesCard = (props) => {
           type="button"
           className={`card__button ${isLiked ? 'card__button_saved' : ''}`}
           onClick={handleSaveMovieClick}
-          disabled={isSaved}
+          // disabled={isSaved}
         >
           {isLiked ? '' : 'Сохранить'}
         </button>

@@ -16,6 +16,10 @@ const Register = (props) => {
     if (isLoggedIn) resetForm();
   }, [isLoggedIn, resetForm]);
 
+  useEffect(() => {
+    setIsApiError('');
+  }, []);
+
   return (
     <main>
       <section className="register">
@@ -36,6 +40,7 @@ const Register = (props) => {
           linkText={`Войти`}
         >
           <FormInput
+            isLoading={isLoading}
             name={`name`}
             title={`Имя`}
             value={values.name}
@@ -44,6 +49,7 @@ const Register = (props) => {
             errors={errors.name}
           />
           <FormInput
+            isLoading={isLoading}
             name={`email`}
             title={`E-mail`}
             value={values.email}
@@ -52,6 +58,7 @@ const Register = (props) => {
             errors={errors.email}
           />
           <FormInput
+            isLoading={isLoading}
             name={`password`}
             title={`Пароль`}
             value={values.password}

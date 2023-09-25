@@ -2,7 +2,7 @@ import React from 'react';
 import './FormInput.css';
 
 const FormInput = (props) => {
-  const { name, title, value, onChange, errors } = props;
+  const { isLoading, name, title, value, onChange, errors } = props;
 
   return (
     <>
@@ -24,6 +24,7 @@ const FormInput = (props) => {
         maxLength="30"
         onChange={onChange}
         defaultValue={value}
+        disabled={isLoading}
       ></input>
       <span className={`auth__input-error`}>{errors}</span>
     </>

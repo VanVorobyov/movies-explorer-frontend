@@ -7,8 +7,11 @@ import useValidation from '../../hooks/useValidation';
 
 const Profile = (props) => {
   const currentUser = useContext(CurrentUserContext);
-  const { isSuccess, isLoading, loadingText, buttonText, onBurgerButtonClick, onUpdateUser, onLogOut, isApiError, setIsApiError } = props;
-  const { values, handleChange, isValid, errors, resetForm } = useValidation();
+  const { isLoggedIn, isSuccess, isLoading, loadingText, buttonText, onBurgerButtonClick, onUpdateUser, onLogOut, isApiError, setIsApiError } = props;
+  const { values, handleChange, isValid, errors, resetForm } = useValidation({
+    name: '',
+    email: '',
+  });
 
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -22,18 +25,22 @@ const Profile = (props) => {
   }, [currentUser, resetForm]);
 
   useEffect(() => {
-    if (currentUser.name === values.name && currentUser.email === values.email) {
-      setIsNotChange(true);
-      setIsNotChangeInfo('Измените имя или email для сохранения');
+    if (values) {
+      if (currentUser.name === values.name && currentUser.email === values.email) {
+        setIsNotChange(true);
+        setIsNotChangeInfo('Измените имя или email для сохранения');
+      } else {
+        setIsNotChange(false);
+        setIsNotChangeInfo('');
+      }
     } else {
-      setIsNotChange(false);
-      setIsNotChangeInfo('');
+      console.error('values.name is undefined or null');
     }
   }, [values, currentUser]);
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (isValid && isSubmit) {
+    if (values && values.name && values.email && isValid && isSubmit) {
       onUpdateUser({
         name: values.name.trim(),
         email: values.email.trim(),
@@ -41,10 +48,18 @@ const Profile = (props) => {
       setIsSubmit(false);
       setIsEditing(false);
     }
-  }
+  };
+
+  useEffect(() => {
+    setIsApiError('');
+  }, []);
+
   return (
     <>
-      <Header onClick={onBurgerButtonClick} />
+      <Header
+        onClick={onBurgerButtonClick}
+        isLoggedIn={isLoggedIn}
+      />
       <main>
         <section className="profile">
           <h1 className="profile__title">Привет, {currentUser.name}!</h1>
@@ -71,7 +86,7 @@ const Profile = (props) => {
                 required={true}
                 readOnly={!isEditing}
                 onChange={handleChange}
-                value={values.name || ''}
+                value={values && values.name ? values.name : ''}
               />
             </label>
             <label
@@ -91,7 +106,7 @@ const Profile = (props) => {
                 required
                 readOnly={!isEditing}
                 onChange={handleChange}
-                value={values.email || ''}
+                value={values && values.email ? values.email : ''}
               />
             </label>
             {isSuccess ? (
@@ -126,7 +141,9 @@ const Profile = (props) => {
                 <Link
                   className="profile__form-button-sign-out-link"
                   to="/"
-                  onClick={onLogOut}
+                  onClick={() => {
+                    onLogOut();
+                  }}
                 >
                   Выйти из аккаунта
                 </Link>

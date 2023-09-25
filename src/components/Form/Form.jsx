@@ -49,7 +49,7 @@ const Form = (props) => {
         <button
           className={`auth__form-button auth__form-button_${name} ${!isValid || isDisabled ? 'auth__form-button_disabled' : ''}`}
           type="submit"
-          disabled={!isValid || isDisabled}
+          disabled={!isValid || isDisabled || isLoading}
         >
           {isLoading ? loadingText : buttonText}
         </button>

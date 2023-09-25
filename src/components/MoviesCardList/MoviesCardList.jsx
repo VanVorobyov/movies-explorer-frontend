@@ -10,6 +10,7 @@ const MoviesCardList = ({ isLoading, movies, savedMovies, onSaveMovie, onMovieDe
 
   const [isNumberOfMovies, setNumberOfMovies] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
+  const [visibleMovies, setVisibleMovies] = useState([]);
 
   const isMovieSaved = (movie, savedMovies) => {
     return savedMovies.some((savedMovie) => savedMovie.movieId === movie.id);
@@ -18,11 +19,11 @@ const MoviesCardList = ({ isLoading, movies, savedMovies, onSaveMovie, onMovieDe
   const handleNumberOfMovies = () => {
     const display = window.innerWidth;
     if (display > 1023) {
-      setNumberOfMovies(12);
+      setNumberOfMovies(isNumberOfMovies || 12);
     } else if (display > 698) {
-      setNumberOfMovies(8);
+      setNumberOfMovies(isNumberOfMovies || 8);
     } else {
-      setNumberOfMovies(5);
+      setNumberOfMovies(isNumberOfMovies || 5);
     }
   };
 
@@ -33,25 +34,61 @@ const MoviesCardList = ({ isLoading, movies, savedMovies, onSaveMovie, onMovieDe
     } else if (display > 698) {
       setNumberOfMovies(isNumberOfMovies + 2);
     } else {
-      setNumberOfMovies(isNumberOfMovies + 1);
+      setNumberOfMovies(isNumberOfMovies + 2);
     }
   };
 
   useEffect(() => {
     handleNumberOfMovies();
+  }, [movies]);
+
+  useEffect(() => {
+    handleNumberOfMovies();
+
+    const handleResize = () => {
+      handleNumberOfMovies();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      window.addEventListener('resize', handleNumberOfMovies);
-    }, 500);
-  });
+    const display = window.innerWidth;
+    if (display > 1023) {
+      setVisibleMovies(movies.slice(0, 12));
+    } else if (display > 698) {
+      setVisibleMovies(movies.slice(0, 8));
+    } else {
+      setVisibleMovies(movies.slice(0, 5));
+    }
+  }, [movies]);
+
+  useEffect(() => {
+    handleNumberOfMovies(); // Update the number of movies when component mounts
+  }, [movies]); // Update the number of movies when movies change
+
+  useEffect(() => {
+    if (!isSavedMovies) {
+      const display = window.innerWidth;
+      if (display > 1023) {
+        setVisibleMovies(movies.slice(0, isNumberOfMovies));
+      } else if (display > 698) {
+        setVisibleMovies(movies.slice(0, isNumberOfMovies));
+      } else {
+        setVisibleMovies(movies.slice(0, isNumberOfMovies));
+      }
+    }
+  }, [isNumberOfMovies, movies, isSavedMovies]);
 
   return (
     <section className="movies-card-list">
       <div className="movies-card-list__content">
         {isLoading ? (
-          <Preloader /> // Show preloader if isLoading is true
+          <Preloader />
         ) : (
           <ul className="movies-cards">
             {isSavedMovies && (
@@ -73,26 +110,22 @@ const MoviesCardList = ({ isLoading, movies, savedMovies, onSaveMovie, onMovieDe
                   : []}
               </>
             )}
-            {!isSavedMovies && (
-              <>
-                {movies
-                  ? movies.slice(0, isNumberOfMovies).map((movie) => {
-                      const isMovieInSaved = isMovieSaved(movie, savedMovies);
-                      return (
-                        <MoviesCard
-                          key={movie.id}
-                          movie={movie}
-                          movies={movies}
-                          savedMovies={savedMovies}
-                          isSaved={isMovieInSaved}
-                          setIsSaved={setIsSaved}
-                          onSaveMovie={onSaveMovie}
-                        />
-                      );
-                    })
-                  : []}
-              </>
-            )}
+            {!isSavedMovies &&
+              visibleMovies.map((movie) => {
+                const isMovieInSaved = isMovieSaved(movie, savedMovies);
+                return (
+                  <MoviesCard
+                    key={movie.id}
+                    movie={movie}
+                    movies={movies}
+                    savedMovies={savedMovies}
+                    isSaved={isMovieInSaved}
+                    setIsSaved={setIsSaved}
+                    onSaveMovie={onSaveMovie}
+                    onMovieDelete={onMovieDelete}
+                  />
+                );
+              })}
           </ul>
         )}
         <button

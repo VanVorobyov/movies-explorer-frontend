@@ -1,8 +1,14 @@
 import React from 'react';
 import './NotFoundPage.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const NotFoundPage = () => {
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <main>
       <section className="error-page">
@@ -11,7 +17,7 @@ const NotFoundPage = () => {
           <p className="error-page__subtitle">Страница не найдена</p>
         </div>
         <Link
-          to="/"
+          onClick={handleGoBack}
           className="error-page__link"
         >
           Назад

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
+import { Route, Routes, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import './App.css';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
@@ -12,7 +12,6 @@ import NotFoundPage from '../NotFoundPage/NotFounfPage';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import ScrollToTop from '../../utils/ScrollToTop/ScrollToTop';
 
-import moviesApi from '../../utils/MoviesApi';
 import auth from '../../utils/Auth';
 import mainApi from '../../utils/MainApi';
 
@@ -20,6 +19,7 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [moviesLoaded, setMoviesLoaded] = useState(false);
   const [isBurgerMenuOpen, setBurgerMenuOpen] = useState(false);
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
@@ -90,18 +90,15 @@ const App = () => {
   };
 
   const handleSubmit = (request) => {
-    setIsLoading(true);
-
     request()
       .then(() => {
         setIsSuccess(true);
-        setTimeout(() => setIsSuccess(false), 10000);
+        setTimeout(() => setIsSuccess(false), 3000);
       })
       .catch((err) => {
         handleError(err);
         console.error(err);
-      })
-      .finally(() => setIsLoading(false));
+      });
   };
 
   const handleUpdateUser = (inputValues) => {
@@ -112,7 +109,6 @@ const App = () => {
   };
 
   const handleSaveMovie = (movie) => {
-    setIsLoading(true);
     mainApi
       .saveMovie(movie)
       .then((newMovie) => {
@@ -120,17 +116,23 @@ const App = () => {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => setIsLoading(false));
+      });
   };
 
   const handleDeleteMovie = (movie) => {
-    const makeRequest = () => {
-      return mainApi.deleteMovie(movie._id).then(() => {
-        setSavedMovies((state) => state.filter((item) => item._id !== movie._id));
+    if (!movie || !movie.movieId) {
+      console.error('Invalid movie object or movie ID');
+      return;
+    }
+
+    mainApi
+      .deleteMovie(movie._id)
+      .then(() => {
+        setSavedMovies((prevSavedMovies) => prevSavedMovies.filter((item) => item._id !== movie._id));
+      })
+      .catch((error) => {
+        console.error('Error deleting movie:', error);
       });
-    };
-    handleSubmit(makeRequest);
   };
 
   useEffect(() => {
@@ -152,15 +154,19 @@ const App = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies(), moviesApi.getInitialCards()])
-        .then(([userInfo, movies, getInitialCards]) => {
+      setIsLoading(true);
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+        .then(([userInfo, savedMovies]) => {
           setCurrentUser(userInfo);
-          setSavedMovies(movies.reverse());
-          setMovies(getInitialCards);
+          setSavedMovies(savedMovies.reverse());
+          setMoviesLoaded(true);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err))
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, moviesLoaded]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -182,11 +188,14 @@ const App = () => {
               <ProtectedRoute
                 element={Movies}
                 isLoggedIn={isLoggedIn}
+                setIsLoading={setIsLoading}
                 movies={movies}
                 savedMovies={savedMovies}
                 isLoading={isLoading}
                 onSaveMovie={handleSaveMovie}
+                onMovieDelete={handleDeleteMovie}
                 onBurgerButtonClick={handleBurgerMenuOpen}
+                setMovies={setMovies}
               />
             }
           />
@@ -223,27 +232,35 @@ const App = () => {
           <Route
             path="/signin"
             element={
-              <Login
-                isSuccess={isSuccess}
-                onLogin={handleLoginUser}
-                isLoggedIn={isLoggedIn}
-                isLoading={isLoading}
-                isApiError={isApiError}
-                setIsApiError={setIsApiError}
-              />
+              isLoggedIn ? (
+                <Navigate to="/" />
+              ) : (
+                <Login
+                  isSuccess={isSuccess}
+                  onLogin={handleLoginUser}
+                  isLoggedIn={isLoggedIn}
+                  isLoading={isLoading}
+                  isApiError={isApiError}
+                  setIsApiError={setIsApiError}
+                />
+              )
             }
           />
           <Route
             path="/signup"
             element={
-              <Register
-                isSuccess={isSuccess}
-                onRegister={handleRegisterUser}
-                isLoggedIn={isLoggedIn}
-                isLoading={isLoading}
-                isApiError={isApiError}
-                setIsApiError={setIsApiError}
-              />
+              isLoggedIn ? (
+                <Navigate to="/" />
+              ) : (
+                <Register
+                  isSuccess={isSuccess}
+                  onRegister={handleRegisterUser}
+                  isLoggedIn={isLoggedIn}
+                  isLoading={isLoading}
+                  isApiError={isApiError}
+                  setIsApiError={setIsApiError}
+                />
+              )
             }
           />
           <Route

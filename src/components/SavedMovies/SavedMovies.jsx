@@ -3,15 +3,14 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
-import FilterMovies from '../../utils/FilterMovies';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import { filterMovies } from '../../utils/constants';
 
 const SavedMovies = (props) => {
-  const { isLoading, movies, savedMovies, onMovieDelete, onBurgerButtonClick } = props;
+  const { isLoggedIn, isLoading, movies, savedMovies, onMovieDelete, onBurgerButtonClick } = props;
 
   const [searchedSavedMovies, setSearchedSavedMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isShortSavedMovies, setIsShortSavedMovies] = useLocalStorage('isShortSavedMovies', false);
+  const [isShortSavedMovies, setIsShortSavedMovies] = useState(false);
   const [shortSavedMovies, setShortSavedMovies] = useState([]);
   const [isQueryError, setIsQueryError] = useState(false);
   const [isNotFound, setIsNotFound] = useState(false);
@@ -22,7 +21,7 @@ const SavedMovies = (props) => {
 
   useEffect(() => {
     if (searchedSavedMovies.length === 0) {
-      !isLoading && setIsNotFound(true);
+      setIsNotFound(true);
     } else {
       setIsNotFound(false);
     }
@@ -32,53 +31,34 @@ const SavedMovies = (props) => {
     e.preventDefault();
     if (searchQuery.trim() === '') {
       setIsQueryError(true);
-
       setSearchedSavedMovies(savedMovies);
-      localStorage.setItem('searchedSavedMovies', JSON.stringify(savedMovies));
-      localStorage.setItem('filteredSavedMovies', JSON.stringify(FilterMovies(savedMovies)));
-      localStorage.removeItem('searchQuery');
     } else {
       setIsQueryError(false);
       const searchedSavedMovies = savedMovies.filter((movie) => movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase().trim()));
-
-      localStorage.setItem('searchQuery', JSON.stringify(searchQuery.trim()));
-      localStorage.setItem('searchedSavedMovies', JSON.stringify(searchedSavedMovies));
-      localStorage.setItem('filteredSavedMovies', JSON.stringify(FilterMovies(searchedSavedMovies)));
-
-      if (isShortSavedMovies) {
-        setShortSavedMovies(JSON.parse(localStorage.getItem('filteredSavedMovies')));
-      }
+      setSearchedSavedMovies(searchedSavedMovies);
     }
   };
 
   useEffect(() => {
     const filteredMovies = savedMovies.filter((movie) => movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase().trim()));
-
     if (isShortSavedMovies) {
-      const filteredShortMovies = FilterMovies(filteredMovies);
+      const filteredShortMovies = filterMovies(filteredMovies);
       setShortSavedMovies(filteredShortMovies);
-      localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredShortMovies));
     } else {
       setSearchedSavedMovies(filteredMovies);
-      localStorage.setItem('filteredSavedMovies', JSON.stringify(filteredMovies));
     }
   }, [savedMovies, searchQuery, isShortSavedMovies]);
 
-  useEffect(() => {
-    const storedSearchQuery = JSON.parse(localStorage.getItem('searchQuery'));
-    if (storedSearchQuery) {
-      setSearchQuery(storedSearchQuery);
-    }
-  }, []);
-
   const handleSearchMovies = (value) => {
     setSearchQuery(value);
-    localStorage.setItem('searchQuery', JSON.stringify(value));
   };
 
   return (
     <>
-      <Header onClick={onBurgerButtonClick} />
+      <Header
+        onClick={onBurgerButtonClick}
+        isLoggedIn={isLoggedIn}
+      />
       <main>
         <SearchForm
           handleSavedCheckboxClick={handleSavedCheckboxClick}

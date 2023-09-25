@@ -15,6 +15,10 @@ const Login = (props) => {
     if (isLoggedIn) resetForm();
   }, [isLoggedIn, resetForm]);
 
+  useEffect(() => {
+    setIsApiError('');
+  }, []);
+
   return (
     <main>
       <section className="login">
@@ -35,6 +39,7 @@ const Login = (props) => {
           linkText={`Регистрация`}
         >
           <FormInput
+            isLoading={isLoading}
             name={`email`}
             title={`E-mail`}
             value={values.email}
@@ -43,6 +48,7 @@ const Login = (props) => {
             errors={errors.email}
           />
           <FormInput
+            isLoading={isLoading}
             name={`password`}
             title={`Пароль`}
             value={values.password}
