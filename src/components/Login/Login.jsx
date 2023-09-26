@@ -1,20 +1,43 @@
-import React from 'react';
+import { useEffect } from 'react';
 import Form from '../Form/Form';
 import FormInput from '../FormInput/FormInput';
+import useValidation from '../../hooks/useValidation';
 
 const Login = (props) => {
-  const { onSubmit, isValid, isDisabled, isLoading } = props;
+  const { onLogin, isLoading, isLoggedIn, isApiError, setIsApiError } = props;
+  const { values, handleChange, resetForm, isValid, isDisabled, errors } = useValidation({ email: '', password: '' });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onLogin(values.email, values.password);
+  }
+  useEffect(() => {
+    if (isLoggedIn) resetForm();
+  }, [isLoggedIn, resetForm]);
+
+  useEffect(() => {
+    setIsApiError('');
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      setIsApiError('');
+    };
+  }, []);
 
   return (
     <main>
       <section className="login">
         <Form
           title={`Рады видеть!`}
-          onSubmit={onSubmit}
           name={`signin`}
+          onSubmit={handleSubmit}
           isValid={isValid}
           isDisabled={isDisabled}
           isLoading={isLoading}
+          isLoggedIn={isLoggedIn}
+          isApiError={isApiError}
+          setIsApiError={setIsApiError}
           loadingText={`Войти...`}
           buttonText={`Войти`}
           link={`/signup`}
@@ -22,12 +45,22 @@ const Login = (props) => {
           linkText={`Регистрация`}
         >
           <FormInput
+            isLoading={isLoading}
             name={`email`}
             title={`E-mail`}
+            value={values.email}
+            isValid={isValid}
+            onChange={handleChange}
+            errors={errors.email}
           />
           <FormInput
+            isLoading={isLoading}
             name={`password`}
             title={`Пароль`}
+            value={values.password}
+            isValid={isValid}
+            onChange={handleChange}
+            errors={errors.password}
           />
         </Form>
       </section>

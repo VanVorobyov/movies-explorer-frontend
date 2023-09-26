@@ -1,48 +1,9 @@
-import image from '../images/pic.png';
-export const movies = [
-  {
-    name: 'В погоне за Бенкси',
-    duration: '0ч 42м',
-    image: image,
-  },
-  {
-    name: 'В погоне за Бенкси',
-    duration: '0ч 42м',
-    image: image,
-  },
-  {
-    name: 'В погоне за Бенкси',
-    duration: '0ч 42м',
-    image: image,
-  },
-  {
-    name: 'В погоне за Бенкси',
-    duration: '0ч 42м',
-    image: image,
-  },
-  {
-    name: 'В погоне за Бенкси',
-    duration: '0ч 42м',
-    image: image,
-  },
-  {
-    name: 'В погоне за Бенкси',
-    duration: '0ч 42м',
-    image: image,
-  },
-  {
-    name: 'В погоне за Бенкси',
-    duration: '0ч 42м',
-    image: image,
-  },
-  {
-    name: 'В погоне за Бенкси',
-    duration: '0ч 42м',
-    image: image,
-  },
-  {
-    name: 'В погоне за Бенкси',
-    duration: '0ч 42м',
-    image: image,
-  },
-];
+export function convertDuration(duration) {
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
+  return `${hours}ч ${minutes}м`;
+}
+
+export function filterMovies(array) {
+  return array.filter((movie) => movie.duration <= 40);
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import './FormInput.css';
 
 const FormInput = (props) => {
-  const { name, title, handleChange } = props;
+  const { isLoading, name, title, value, onChange, errors } = props;
 
   return (
     <>
@@ -17,15 +17,16 @@ const FormInput = (props) => {
         type={name === 'name' ? 'text' : name}
         className={`auth__form-input auth__form-input_${name}`}
         placeholder={`Введите ${title}`}
-        name={`${name}-input`}
-        autoComplete="new-password"
-        required={true}
+        name={`${name}`}
+        autoComplete="off"
+        required
         minLength="2"
         maxLength="30"
-        onChange={handleChange}
-        // value={values[this.name] || ''}
+        onChange={onChange}
+        defaultValue={value}
+        disabled={isLoading}
       ></input>
-      <span className="auth__input-error">Что-то пошло не так...</span>
+      <span className={`auth__input-error`}>{errors}</span>
     </>
   );
 };

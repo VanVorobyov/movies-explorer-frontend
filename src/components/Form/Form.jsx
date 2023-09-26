@@ -1,10 +1,26 @@
-import React from 'react';
+import { React } from 'react';
 import { Link } from 'react-router-dom';
 import './Form.css';
 import logo from '../../images/header__logo.svg';
 
 const Form = (props) => {
-  const { title, children, onSubmit, name, isValid, isDisabled, isLoading, loadingText, buttonText, link, text, linkText } = props;
+  const {
+    title,
+    children,
+    onSubmit,
+    name,
+    isLoading,
+    loadingText,
+    buttonText,
+    link,
+    text,
+    linkText,
+    isValid,
+    isDisabled,
+    isApiError,
+    setIsApiError,
+  } = props;
+
   return (
     <div className="auth">
       <form
@@ -29,13 +45,11 @@ const Form = (props) => {
 
         {children}
 
+        <span className="auth__form-error">{isApiError}</span>
         <button
-          className={`auth__form-button auth__form-button_${name}
-
-          //${!isValid || isDisabled ? 'auth__form-button_disabled' : ''}
-          `}
+          className={`auth__form-button auth__form-button_${name} ${!isValid || isDisabled ? 'auth__form-button_disabled' : ''}`}
           type="submit"
-          disabled={!isValid || isDisabled}
+          disabled={!isValid || isDisabled || isLoading}
         >
           {isLoading ? loadingText : buttonText}
         </button>
@@ -45,6 +59,7 @@ const Form = (props) => {
           <Link
             to={link}
             className="auth__form-link"
+            onClick={() => setIsApiError('')}
           >
             {linkText}
           </Link>
