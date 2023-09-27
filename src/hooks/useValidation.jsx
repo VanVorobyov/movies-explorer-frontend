@@ -10,17 +10,18 @@ function useValidation(initialValues) {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
 
+    const form = e.target.closest('form');
+    setIsValid(form.checkValidity());
+    setIsDisabled(!form.checkValidity());
+
     if (name === 'email') {
       const emailPattern = /^[a-zA-Z0-9._%+\-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
       const isValidEmail = emailPattern.test(value);
       setErrors({ ...errors, [name]: isValidEmail ? '' : 'Неправильный формат email' });
+      setIsValid(isValidEmail);
+      setIsDisabled(isValidEmail);
     }
-
-    const form = e.target.closest('form');
-    setIsValid(form.checkValidity());
-    setIsDisabled(!form.checkValidity());
   };
-
   const resetForm = useCallback((newValues = {}, newErrors = {}, newIsValid = false, newIsDisabled = true) => {
     setValues(newValues);
     setErrors(newErrors);
@@ -30,5 +31,4 @@ function useValidation(initialValues) {
 
   return { values, errors, isValid, isDisabled, handleChange, resetForm };
 }
-
 export default useValidation;

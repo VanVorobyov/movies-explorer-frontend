@@ -124,6 +124,8 @@ const Movies = (props) => {
         <MoviesCardList
           movies={isShortMovies ? shortMovies : searchedMovies}
           savedMovies={savedMovies}
+          searchMovies={searchMovies}
+          searchedMovies={searchedMovies}
           onSaveMovie={onSaveMovie}
           onMovieDelete={onMovieDelete}
           isLoading={isLoading}

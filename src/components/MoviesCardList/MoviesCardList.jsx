@@ -4,13 +4,21 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 
-const MoviesCardList = ({ isLoading, movies, savedMovies, onSaveMovie, onMovieDelete }) => {
+import {
+  LAPTOP_MOVIES_NUMBER,
+  TABLET_MOVIES_NUMBER,
+  MOBILE_MOVIES_NUMBER,
+  ADDED_LAPTOP_MOVIES_NUMBER,
+  ADDED_TABLET_MOVIES_NUMBER,
+  ADDED_MOBILE_MOVIES_NUMBER,
+} from '../../utils/constants';
+
+const MoviesCardList = ({ isLoading, movies, searchMovies, savedMovies, onSaveMovie, onMovieDelete }) => {
   const path = useLocation().pathname;
   const isSavedMovies = path === '/saved-movies';
 
   const [isNumberOfMovies, setNumberOfMovies] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
-  const [visibleMovies, setVisibleMovies] = useState([]);
 
   const isMovieSaved = (movie, savedMovies) => {
     return savedMovies.some((savedMovie) => savedMovie.movieId === movie.id);
@@ -19,70 +27,45 @@ const MoviesCardList = ({ isLoading, movies, savedMovies, onSaveMovie, onMovieDe
   const handleNumberOfMovies = () => {
     const display = window.innerWidth;
     if (display > 1023) {
-      setNumberOfMovies(isNumberOfMovies || 12);
+      setNumberOfMovies(isNumberOfMovies || LAPTOP_MOVIES_NUMBER);
     } else if (display > 698) {
-      setNumberOfMovies(isNumberOfMovies || 8);
+      setNumberOfMovies(isNumberOfMovies || TABLET_MOVIES_NUMBER);
     } else {
-      setNumberOfMovies(isNumberOfMovies || 5);
+      setNumberOfMovies(isNumberOfMovies || MOBILE_MOVIES_NUMBER);
     }
   };
 
   const handleShowMore = () => {
     const display = window.innerWidth;
     if (display > 1023) {
-      setNumberOfMovies(isNumberOfMovies + 3);
+      setNumberOfMovies(isNumberOfMovies + ADDED_LAPTOP_MOVIES_NUMBER);
     } else if (display > 698) {
-      setNumberOfMovies(isNumberOfMovies + 2);
+      setNumberOfMovies(isNumberOfMovies + ADDED_TABLET_MOVIES_NUMBER);
     } else {
-      setNumberOfMovies(isNumberOfMovies + 2);
+      setNumberOfMovies(isNumberOfMovies + ADDED_MOBILE_MOVIES_NUMBER);
     }
   };
 
   useEffect(() => {
     handleNumberOfMovies();
-  }, [movies]);
-
-  useEffect(() => {
-    handleNumberOfMovies();
-
-    const handleResize = () => {
-      handleNumberOfMovies();
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
   }, []);
 
   useEffect(() => {
     const display = window.innerWidth;
     if (display > 1023) {
-      setVisibleMovies(movies.slice(0, 12));
+      setNumberOfMovies(LAPTOP_MOVIES_NUMBER);
     } else if (display > 698) {
-      setVisibleMovies(movies.slice(0, 8));
+      setNumberOfMovies(TABLET_MOVIES_NUMBER);
     } else {
-      setVisibleMovies(movies.slice(0, 5));
+      setNumberOfMovies(MOBILE_MOVIES_NUMBER);
     }
   }, [movies]);
 
   useEffect(() => {
-    handleNumberOfMovies(); // Update the number of movies when component mounts
-  }, [movies]); // Update the number of movies when movies change
-
-  useEffect(() => {
-    if (!isSavedMovies) {
-      const display = window.innerWidth;
-      if (display > 1023) {
-        setVisibleMovies(movies.slice(0, isNumberOfMovies));
-      } else if (display > 698) {
-        setVisibleMovies(movies.slice(0, isNumberOfMovies));
-      } else {
-        setVisibleMovies(movies.slice(0, isNumberOfMovies));
-      }
-    }
-  }, [isNumberOfMovies, movies, isSavedMovies]);
+    setTimeout(() => {
+      window.addEventListener('resize', handleNumberOfMovies);
+    }, 500);
+  });
 
   return (
     <section className="movies-card-list">
@@ -110,22 +93,26 @@ const MoviesCardList = ({ isLoading, movies, savedMovies, onSaveMovie, onMovieDe
                   : []}
               </>
             )}
-            {!isSavedMovies &&
-              visibleMovies.map((movie) => {
-                const isMovieInSaved = isMovieSaved(movie, savedMovies);
-                return (
-                  <MoviesCard
-                    key={movie.id}
-                    movie={movie}
-                    movies={movies}
-                    savedMovies={savedMovies}
-                    isSaved={isMovieInSaved}
-                    setIsSaved={setIsSaved}
-                    onSaveMovie={onSaveMovie}
-                    onMovieDelete={onMovieDelete}
-                  />
-                );
-              })}
+            {!isSavedMovies && (
+              <>
+                {movies
+                  ? movies.slice(0, isNumberOfMovies).map((movie) => {
+                      const isMovieInSaved = isMovieSaved(movie, savedMovies);
+                      return (
+                        <MoviesCard
+                          key={movie.id}
+                          movie={movie}
+                          movies={movies}
+                          savedMovies={savedMovies}
+                          isSaved={isMovieInSaved}
+                          setIsSaved={setIsSaved}
+                          onSaveMovie={onSaveMovie}
+                        />
+                      );
+                    })
+                  : []}
+              </>
+            )}
           </ul>
         )}
         <button
